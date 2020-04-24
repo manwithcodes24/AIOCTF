@@ -1,17 +1,44 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+/*
 
+=========================================================
+* Now UI Kit React - v1.0.0
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/now-ui-kit-react
+* Copyright 2019 Creative Tim (http://www.creative-tim.com)
+* Licensed under MIT (https://github.com/creativetimofficial/now-ui-kit-react/blob/master/LICENSE.md)
+
+* Designed by www.invisionapp.com Coded by www.creative-tim.com
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+*/
+import React from "react";
+import ReactDOM from "react-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+
+// styles for this kit
+
+// pages for this kit
+
+
+import LoginPage from "./pages/LoginPage.js";
+import signupPage from './pages/signupPage.js'
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+  <BrowserRouter>
+    <Switch>
+      <Switch>
+        
+        
+        
+       <Route path='/signup' component={signupPage} />
+        <Route path="/login" render={props => <LoginPage {...props} />} />
+        
+        <Redirect from="/" to="/login" />
+      </Switch>
+    </Switch>
+  </BrowserRouter>,
+  document.getElementById("root")
 );
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
