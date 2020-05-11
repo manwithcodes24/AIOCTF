@@ -29,6 +29,7 @@ import StarBorder from '@material-ui/icons/StarBorder';
 import {Link} from 'react-router-dom';
 import {Grid , Paper , ButtonBase} from '@material-ui/core';
 
+import 'font-awesome/css/font-awesome.min.css';
 
 
 const drawerWidth = 240;
@@ -97,6 +98,9 @@ const useStyles = makeStyles((theme) => ({
   },
   navList:{
     marginTop : '30%',
+  },
+  navText:{
+  color:'darkGrey',fontSize:'0.8rem',marginTop:'1.5rem'
   },
   contentShift: {
     transition: theme.transitions.create('margin', {
@@ -198,6 +202,7 @@ export default function PersistentDrawerLeft(props) {
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}
+        style={{flexDirection:'row'}}
       >
         <Toolbar>
           <IconButton
@@ -209,10 +214,31 @@ export default function PersistentDrawerLeft(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
-            AIOC CTF
-          </Typography>
+   
         </Toolbar>
+        <div style={{justifyContent:'flex-end',flexDirection:'row',display:'flex',width:'100%' }} className={classes.root}>
+          <div style={{width:'50%'}}></div>
+          {/* temp fix to slide things  */}
+          <Grid xs={1} sm={2} className={classes.navText} style={{color:' #00FF00'}}>
+          <i className="fa fa-shopping-cart" aria-hidden="true"></i> Switch to VIP
+        </Grid>
+        <Grid xs={1} sm={2} className={classes.navText}>
+        <i className="fa fa-tshirt"></i>
+Swag Store
+        </Grid>
+        <Grid xs={1} sm={2} className={classes.navText}>
+        <i className="fa fa-gift"></i>   Gift Cards
+        </Grid>
+        <Grid xs={1} sm={2} className={classes.navText}>
+        <i className="fa fa-lightbulb"></i>  Feedback
+        </Grid>
+        <Grid xs={1} sm={2} className={classes.navText}>
+        <i className="fa fa-star"></i> Testimonial
+        </Grid>
+        <Grid xs={1} sm={2} className={classes.navText}>
+    Member Finder
+        </Grid>
+        </div>
       </AppBar>
       <Drawer
         className={classes.drawer}
