@@ -11,7 +11,7 @@ import {Grid } from '@material-ui/core'
     
     return (
         <div>
-        <NavBar className="AppBar" name='Dashboard' description='lorem ipsum' /> 
+        <NavBar  name='Dashboard' description="is an online platform allowing you to test and advance your skills in cyber security. Use it responsibly and don't hack your fellow members..." /> 
 
         </div>
     )

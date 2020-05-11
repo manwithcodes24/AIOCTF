@@ -86,7 +86,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-end',
   },
   content: {
-   
+   height:'70vh',
     flexGrow: 1,
     padding: theme.spacing(3),
     transition: theme.transitions.create('margin', {
@@ -138,13 +138,17 @@ const useStyles = makeStyles((theme) => ({
 
   },
   titleRoot:{
-    position: 'relative',
-    top:'0'
+   
+    top:'0',
+    
   }, 
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center',
     color: theme.palette.text.secondary,
+  },
+  titleDescription:{
+    color:'#3f4447',
   },
 }));
 
@@ -475,19 +479,19 @@ export default function PersistentDrawerLeft(props) {
       >
       <div className={classes.titleRoot}>
      
-        <Grid container spacing={2}  justify="space-between">
+        <Grid container spacing={3}  justify="space-between">
           <Grid item>
             <ButtonBase className={classes.image}>
-              <img className={classes.img} alt="complex" src="/static/images/grid/complex.jpg" />
+              <img className={classes.img} alt="complex" src="../assets/image/logo4.png" />
             </ButtonBase>
           </Grid>
           <Grid item xs={30} sm container>
             <Grid item xs container direction="column" spacing={2}>
               <Grid item xs>
                 <Typography gutterBottom variant="subtitle1">
-                  {props.name}
+                  AIOC
                 </Typography>
-                <Typography variant="body2" gutterBottom>
+                <Typography variant="body2" gutterBottom className={classes.titleDescription}>
                  {props.description}
                 </Typography>
                 
@@ -498,7 +502,7 @@ export default function PersistentDrawerLeft(props) {
             </Grid>
           </Grid>
         </Grid>
-      
+      <Divider/>
     </div>
       </div>
     </div>
