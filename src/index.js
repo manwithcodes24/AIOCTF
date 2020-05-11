@@ -25,7 +25,8 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 
 import LoginPage from "./pages/LoginPage.js";
-import signupPage from './pages/signupPage.js'
+import signupPage from './pages/signupPage.js';
+import dashboard from './pages/dashboard.js'
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
@@ -35,7 +36,8 @@ ReactDOM.render(
         
        <Route path='/signup' component={signupPage} />
         <Route path="/login" render={props => <LoginPage {...props} />} />
-        
+        <Route path="/dashboard" component={dashboard} />} />
+
         <Redirect from="/" to="/login" />
       </Switch>
     </Switch>

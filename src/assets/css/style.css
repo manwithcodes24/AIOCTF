@@ -8,7 +8,7 @@
 body {
 	color:
 #57c95b;
-	background: #f6f5f7;
+	background:#1e2125;
 	display: flex;
 	overflow: hidden;
 	justify-content: center;
@@ -116,7 +116,11 @@ input {
 	max-width: 100%;
 	min-height: 480px;
 }
-
+.AppBar { 
+	height: auto;
+	width :auto; 
+	top:0 ; 
+}
 .form-container {
 
 	position: absolute;
@@ -269,4 +273,11 @@ input {
   background-size: cover;
   background-position: 50% 50%;
   background-repeat: no-repeat;
+}
+
+.nav-list{
+	margin-top: 5% ;
+}
+.AppTitle_section2 {
+	
 }
