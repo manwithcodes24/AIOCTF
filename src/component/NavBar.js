@@ -75,7 +75,11 @@ const useStyles = makeStyles((theme) => ({
     color: '#edf1e6',
     
   },
-
+  navText:{
+    margin:'10px',
+    fontSize:'0.9rem',
+    color:'darkGrey'
+  },
   drawerHeader: {
     
     display: 'flex',
@@ -210,7 +214,22 @@ export default function PersistentDrawerLeft(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            AIOC CTF
+            {/* AIOC CTF   */}
+            <Grid container
+  direction="row"
+  
+  justifyContent='flex-end'
+>
+  <Typography   className={classes.navText}>Switch to VIP</Typography>
+  <Typography 
+   className={classes.navText}
+  >Swag Store</Typography>
+  <Typography   className={classes.navText}>Gift Card</Typography>
+  <Typography   className={classes.navText}>Feedback</Typography>
+  <Typography   className={classes.navText}>Testimonial</Typography>
+  <Typography  className={classes.navText}>Member Finder </Typography>
+
+  </Grid>
           </Typography>
         </Toolbar>
       </AppBar>
@@ -219,9 +238,7 @@ export default function PersistentDrawerLeft(props) {
         variant="persistent"
         anchor="left"
         open={open}
-        classes={{
-          paper: classes.drawerPaper,
-        }}
+        
       >
        
         
@@ -487,6 +504,24 @@ export default function PersistentDrawerLeft(props) {
           </Grid>
           <Grid item xs={30} sm container>
             <Grid item xs container direction="column" spacing={2}>
+              <Grid item xs>
+                <Typography gutterBottom variant="subtitle1">
+                  AIOC
+                </Typography>
+                <Typography variant="body2" gutterBottom className={classes.titleDescription}>
+                 {props.description}
+                </Typography>
+                
+              </Grid>
+              <Grid item xs>
+                <Typography gutterBottom variant="subtitle1">
+                  AIOC
+                </Typography>
+                <Typography variant="body2" gutterBottom className={classes.titleDescription}>
+                 {props.description}
+                </Typography>
+                
+              </Grid>
               <Grid item xs>
                 <Typography gutterBottom variant="subtitle1">
                   AIOC
