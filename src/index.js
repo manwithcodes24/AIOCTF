@@ -26,7 +26,22 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import LoginPage from "./pages/LoginPage.js";
 import signupPage from './pages/signupPage.js';
-import dashboard from './pages/dashboard.js'
+import access from './pages/access.js'
+import announement from './pages/announcement.js'
+import badges from './pages/badges.js'
+import challenges from './pages/challenges.js'
+import country from './pages/country.js'
+import changeLog from './pages/changeLog.js'
+import featureRequest from './pages/featureRequest.js'
+import HOF from './pages/HOF.js'
+import rules from './pages/rules.js'
+import startingPoint from './pages/startingPoint.js'
+import support from './pages/support.js'
+import team from './pages/team.js'
+import universities from './pages/universities.js'
+import university from './pages/university.js'
+import VIP from './pages/VIP.js'
+
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
@@ -36,6 +51,18 @@ ReactDOM.render(
         
        <Route path='/signup' component={signupPage} />
         <Route path="/login" render={props => <LoginPage {...props} />} />
+        <Route path="/access" component={dashboard} />} />
+        <Route path="/dashboard" component={dashboard} />} />
+        <Route path="/dashboard" component={dashboard} />} />
+        <Route path="/dashboard" component={dashboard} />} />
+        <Route path="/dashboard" component={dashboard} />} />
+        <Route path="/dashboard" component={dashboard} />} />
+        <Route path="/dashboard" component={dashboard} />} />
+        <Route path="/dashboard" component={dashboard} />} />
+        <Route path="/dashboard" component={dashboard} />} />
+        <Route path="/dashboard" component={dashboard} />} />
+        <Route path="/dashboard" component={dashboard} />} />
+        <Route path="/dashboard" component={dashboard} />} />
         <Route path="/dashboard" component={dashboard} />} />
 
         <Redirect from="/" to="/login" />
