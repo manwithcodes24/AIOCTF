@@ -1,20 +1,4 @@
-/*
 
-=========================================================
-* Now UI Kit React - v1.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/now-ui-kit-react
-* Copyright 2019 Creative Tim (http://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/now-ui-kit-react/blob/master/LICENSE.md)
-
-* Designed by www.invisionapp.com Coded by www.creative-tim.com
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
@@ -51,19 +35,22 @@ ReactDOM.render(
         
        <Route path='/signup' component={signupPage} />
         <Route path="/login" render={props => <LoginPage {...props} />} />
-        <Route path="/access" component={dashboard} />} />
-        <Route path="/dashboard" component={dashboard} />} />
-        <Route path="/dashboard" component={dashboard} />} />
-        <Route path="/dashboard" component={dashboard} />} />
-        <Route path="/dashboard" component={dashboard} />} />
-        <Route path="/dashboard" component={dashboard} />} />
-        <Route path="/dashboard" component={dashboard} />} />
-        <Route path="/dashboard" component={dashboard} />} />
-        <Route path="/dashboard" component={dashboard} />} />
-        <Route path="/dashboard" component={dashboard} />} />
-        <Route path="/dashboard" component={dashboard} />} />
-        <Route path="/dashboard" component={dashboard} />} />
-        <Route path="/dashboard" component={dashboard} />} />
+        <Route path="/access" component={access} />} />
+        <Route path="/badges" component={badges} />} />
+
+        <Route path="/announement" component={announement} />} />
+        <Route path="/challenges" component={challenges} />} />
+        <Route path="/country" component={country} />} />
+        <Route path="/changeLog" component={changeLog} />} />
+        <Route path="/featureRequest" component={featureRequest} />} />
+        <Route path="/HOF" component={HOF} />} />
+        <Route path="/rules" component={rules} />} />
+        <Route path="/startingPoint" component={startingPoint} />} />
+        <Route path="/support" component={support} />} />
+        <Route path="/team" component={team} />} />
+        <Route path="/universities" component={universities} />} />
+        <Route path="/university" component={university} />} />
+        <Route path="/VIP" component={VIP} />} />
 
         <Redirect from="/" to="/login" />
       </Switch>
