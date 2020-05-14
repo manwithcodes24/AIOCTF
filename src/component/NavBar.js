@@ -28,8 +28,8 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import StarBorder from '@material-ui/icons/StarBorder';
 import {Link} from 'react-router-dom';
 import {Grid , Paper , ButtonBase} from '@material-ui/core';
-
-import 'font-awesome/css/font-awesome.min.css';
+import '../assets/css/style.css'
+import logo from '../assets/image/logo4.png'
 
 
 const drawerWidth = 240;
@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     
     color: '#edf1e6',
   },
-  
+ 
   appBar: {
     backgroundColor: '#343c41',
     transition: theme.transitions.create(['margin', 'width'], {
@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'none',
   },
   drawer: {
-    
+
     width: drawerWidth,
     flexShrink: 0,
   },
@@ -74,7 +74,10 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#111314',
     width: drawerWidth,
     color: '#edf1e6',
+    whiteSpace: "nowrap",
     
+    display: "block",
+    overflow: "hidden"
   },
   navText:{
     margin:'10px',
@@ -91,7 +94,9 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-end',
   },
   content: {
-   height:'70vh',
+   
+    
+   height:'auto',
     flexGrow: 1,
     padding: theme.spacing(3),
     transition: theme.transitions.create('margin', {
@@ -99,10 +104,20 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
     marginLeft: -drawerWidth,
+    marginTop:'0',
+    
   },
   navList:{
+    
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+    display: 'block',
     marginTop : '30%',
   },
+  nested:{
+    fontSize:'0.7em'
+  },
+
   navText:{
   color:'darkGrey',fontSize:'0.8rem',marginTop:'1.5rem'
   },
@@ -115,7 +130,6 @@ const useStyles = makeStyles((theme) => ({
   },
   expansionButtonCommon:{
     fullWidth:'true', 
-    display:'block' ,
     width:'100%' ,
     textAlign:'left',
     color: '#edf1e6',
@@ -126,7 +140,7 @@ const useStyles = makeStyles((theme) => ({
   },
   expansionHeaderCommon:{
     color: '#edf1e6',
-    fontSize:10,
+    fontSize:'0.7em',
 
     
   },
@@ -146,21 +160,25 @@ const useStyles = makeStyles((theme) => ({
 
   },
   titleRoot:{
-   
-    top:'0',
-    
+  
+    top:'20%',
+    left:'5%',
   }, 
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center',
-    color: theme.palette.text.secondary,
+    
   },
   titleDescription:{
     color:'#3f4447',
   },
+  img:{
+    height:'100px' ,
+    
+  },
 }));
 
-export default function PersistentDrawerLeft(props) {
+export default function NavBar(props) {
   const [openMain, setopenMain] = React.useState(false);
   const [openRanking, setopenRanking] = React.useState(false);
   const [openEducation, setopenEducation] = React.useState(false);
@@ -196,6 +214,8 @@ export default function PersistentDrawerLeft(props) {
 
   const handleDrawerClose = () => {
     setOpen(!open);
+    console.log(open)
+    props.parentCallback(!open);
   };
   
   return (
@@ -221,21 +241,11 @@ export default function PersistentDrawerLeft(props) {
 {/* <<<<<<< HEAD*/}
           <Typography variant="h6" noWrap>
             {/* AIOC CTF   */}
-            <Grid container
-  direction="row"
-  
-  justifyContent='flex-end'
->
-  <Typography   className={classes.navText}>Switch to VIP</Typography>
-  <Typography 
-   className={classes.navText}
-  >Swag Store</Typography>
-  <Typography   className={classes.navText}>Gift Card</Typography>
-  <Typography   className={classes.navText}>Feedback</Typography>
-  <Typography   className={classes.navText}>Testimonial</Typography>
-  <Typography  className={classes.navText}>Member Finder </Typography>
+            
+  <Typography>AIOC</Typography>
 
-  </Grid>
+
+  
           </Typography>
 {/* =======
 
@@ -270,7 +280,9 @@ Swag Store
         variant="persistent"
         anchor="left"
         open={open}
-        
+        classes={{
+          paper: classes.drawerPaper,
+        }}
       >
        
         
@@ -282,74 +294,76 @@ Swag Store
         <ListItemIcon>
           <InboxIcon />
         </ListItemIcon>
-        <ListItemText primary="Main" />
+        <ListItemText> <Typography  classes={{
+          root: classes.MuiTypographyRoot, 
+        }}>Main</Typography>  </ListItemText>
         {openMain ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={openMain} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
+          <ListItem button  >
             <ListItemIcon>
               
             </ListItemIcon>
-            <ListItemText primary="Dashboard" />
+           <Link to='/Dashboard' > Dashboard </Link>
             
           </ListItem>  
-          <ListItem button className={clsx(classes.nested)} onClick={handleOther}>
+          <ListItem button className={clsx(classes.nested, classes.expansionButtonCommon)} onClick={handleOther}>
           <ListItemIcon>
             
           </ListItemIcon>
-          <ListItemText primary="Other" />
-          {openOther ? <ExpandLess /> : <ExpandMore />}
+          <ListItemText className={clsx(classes.nested)}> Other </ListItemText> 
+          {openOther ? <ExpandLess /> : <ExpandMore />} 
 
         </ListItem> 
         <Collapse in={openOther} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
         
         
-        <ListItem button className={classes.nested}> 
+        <ListItem button  > 
         <ListItemIcon>   
         </ListItemIcon>
-        <Link to='/rules'><ListItemText primary="Rules" /></Link>
+        <Link to='/rules'>Rules</Link>
         </ListItem>
   
         
-        <ListItem button className={classes.nested}> 
+        <ListItem button  > 
         <ListItemIcon>   
         </ListItemIcon>
-        <Link to='/changeLog'> <ListItemText primary="Change Log" /></Link>
+        <Link to='/changeLog'>Change Log</Link>
         </ListItem>
 
 
       
         
-        <ListItem button className={classes.nested}> 
+        <ListItem button  > 
         <ListItemIcon>   
         </ListItemIcon>
-        <Link to='/badges'><ListItemText primary="Badges" /></Link>
+        <Link to='/badges'>Badges</Link>
         </ListItem>
 
 
       
         
-        <ListItem button className={classes.nested}> 
+        <ListItem button  > 
         <ListItemIcon>   
         </ListItemIcon>
-        <Link to='/features'><ListItemText primary="Feature Request" /></Link>
+        <Link to='/features'>Feature Request</Link>
         </ListItem>
 
 
       
         
-        <ListItem button className={classes.nested}> 
+        <ListItem button  > 
         <ListItemIcon>   
         </ListItemIcon>
-        <Link to='/announcment'><ListItemText primary="Announcment" /></Link>
+        <Link to='/announcment'>Announcment</Link>
         </ListItem>
 
-        <ListItem button className={classes.nested}> 
+        <ListItem button  > 
         <ListItemIcon>   
         </ListItemIcon>
-        <Link to='/support'><ListItemText primary="Support" /></Link>
+        <Link to='/support'>Support</Link>
         </ListItem>
 
 
@@ -369,46 +383,46 @@ Swag Store
         <ListItemIcon>
           <InboxIcon />
         </ListItemIcon>
-        <ListItemText primary="Ranking" />
+        <ListItemText className={clsx(classes.nested, classes.expansionHeaderCommon)}>Ranking</ListItemText>
         {openRanking ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
       <Collapse in={openRanking} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
+          <ListItem button  >
             <ListItemIcon>
              
             </ListItemIcon>
-            <Link to='/hof'><ListItemText primary="hall of fame" /></Link>
+            <Link to='/HOF'>hall of fame</Link>
           </ListItem>
 
-          <ListItem button className={classes.nested}>
+          <ListItem button  >
             <ListItemIcon>
              
             </ListItemIcon>
-            <Link to='/team'><ListItemText primary="team" /></Link>
+            <Link to='/team'>team</Link>
           </ListItem>
           
 
-          <ListItem button className={classes.nested}>
+          <ListItem button  >
             <ListItemIcon>
              
             </ListItemIcon>
-            <Link to='/university'><ListItemText primary="university" /></Link>
+            <Link to='/university'>university</Link>
           </ListItem>
 
 
-          <ListItem button className={classes.nested}>
+          <ListItem button  >
           <ListItemIcon>
            
           </ListItemIcon>
-          <Link to='/country'><ListItemText primary="country" /></Link>
+          <Link to='/country'>country</Link>
         </ListItem>
 
-        <ListItem button className={classes.nested}>
+        <ListItem button  >
           <ListItemIcon>
            
           </ListItemIcon>
-          <Link to='/VIP'><ListItemText primary="VIP" /></Link>
+          <Link to='/VIP'>VIP</Link>
         </ListItem>
 
 
@@ -424,16 +438,16 @@ Swag Store
         <ListItemIcon>
           <InboxIcon />
         </ListItemIcon>
-        <ListItemText primary="Education" />
+        <ListItemText className={clsx(classes.nested, classes.expansionHeaderCommon)}>Education</ListItemText>
         {openEducation ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={openEducation} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
+          <ListItem button  >
             <ListItemIcon>
              
             </ListItemIcon>
-            <Link to='/universities'><ListItemText primary="Universities"/></Link>
+            <Link to='/universities'>Universities</Link>
           </ListItem>
           
           
@@ -443,31 +457,31 @@ Swag Store
         <ListItemIcon>
           <InboxIcon />
         </ListItemIcon>
-        <ListItemText primary="Labs" />
+        <ListItemText className={clsx(classes.nested, classes.expansionHeaderCommon)}>Labs</ListItemText>
         {openLabs ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={openLabs} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
+          <ListItem button  >
             <ListItemIcon>
               
             </ListItemIcon>
-            <Link to='/startingPoint'><ListItemText primary="Starting Point" /></Link>
+            <Link to='/startingPoint'>Starting Point</Link>
           </ListItem>
           
 
-          <ListItem button className={classes.nested}>
+          <ListItem button  >
             <ListItemIcon>
               
             </ListItemIcon>
-            <Link to='/access'><ListItemText primary="Access" /></Link>
+            <Link to='/access'>Access</Link>
           </ListItem>
 
-          <ListItem button className={classes.nested}>
+          <ListItem button  >
           <ListItemIcon>
             
           </ListItemIcon>
-          <Link to='/challenges'><ListItemText primary="Challenges" /></Link>
+          <Link to='/challenges'>Challenges</Link>
         </ListItem>
         
           
@@ -477,43 +491,43 @@ Swag Store
         <ListItemIcon>
           <InboxIcon />
         </ListItemIcon>
-        <ListItemText primary="Social" />
+        <ListItemText className={clsx(classes.nested, classes.expansionHeaderCommon)} >Social </ListItemText>
         {openSocial ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={openSocial} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
+          <ListItem button  >
             <ListItemIcon>
               
             </ListItemIcon>
-            <ListItemText primary="Private Messages" />
+            <ListItemText className={clsx(classes.nested, classes.expansionButtonCommon)} >Private Messages </ListItemText>
           </ListItem>
           
           
-          <ListItem button className={classes.nested}>
+          <ListItem button  >
           <ListItemIcon>
             
           </ListItemIcon>
-          <ListItemText primary="Twitter" />
+          <ListItemText className={clsx(classes.nested, classes.expansionButtonCommon)} primary="Twitter" />
         </ListItem>
-        <ListItem button className={classes.nested}>
+        <ListItem button  >
         <ListItemIcon>
           
         </ListItemIcon>
-       <ListItemText primary="Facebook" />
+       <ListItemText className={clsx(classes.nested, classes.expansionButtonCommon)} primary="Facebook" />
       </ListItem>
 
-      <ListItem button className={classes.nested}>
+      <ListItem button  >
             <ListItemIcon>
               
             </ListItemIcon>
-            <ListItemText primary="Instagram" />
+            <ListItemText className={clsx(classes.nested, classes.expansionButtonCommon)} primary="Instagram" />
           </ListItem>
-          <ListItem button className={classes.nested}>
+          <ListItem button  >
             <ListItemIcon>
               
             </ListItemIcon>
-            <ListItemText primary="Linkedin" />
+            <ListItemText className={clsx(classes.nested, classes.expansionButtonCommon)} primary="Linkedin" />
           </ListItem>
 
         </List>
@@ -531,29 +545,12 @@ Swag Store
         <Grid container spacing={3}  justify="space-between">
           <Grid item>
             <ButtonBase className={classes.image}>
-              <img className={classes.img} alt="complex" src="../assets/image/logo4.png" />
+              <img className={classes.img} alt="Logo" src={logo}/>
             </ButtonBase>
           </Grid>
           <Grid item xs={30} sm container>
             <Grid item xs container direction="column" spacing={2}>
-              <Grid item xs>
-                <Typography gutterBottom variant="subtitle1">
-                  AIOC
-                </Typography>
-                <Typography variant="body2" gutterBottom className={classes.titleDescription}>
-                 {props.description}
-                </Typography>
-                
-              </Grid>
-              <Grid item xs>
-                <Typography gutterBottom variant="subtitle1">
-                  AIOC
-                </Typography>
-                <Typography variant="body2" gutterBottom className={classes.titleDescription}>
-                 {props.description}
-                </Typography>
-                
-              </Grid>
+              
               <Grid item xs>
                 <Typography gutterBottom variant="subtitle1">
                   AIOC

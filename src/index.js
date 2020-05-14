@@ -25,6 +25,7 @@ import team from './pages/team.js'
 import universities from './pages/universities.js'
 import university from './pages/university.js'
 import VIP from './pages/VIP.js'
+import dashboard from "./pages/dashboard.js";
 
 ReactDOM.render(
   <BrowserRouter>
@@ -35,22 +36,23 @@ ReactDOM.render(
         
        <Route path='/signup' component={signupPage} />
         <Route path="/login" render={props => <LoginPage {...props} />} />
-        <Route path="/access" component={access} />} />
-        <Route path="/badges" component={badges} />} />
+        <Route path="/access" component={access} />
+        <Route path="/badges" component={badges} />
+        <Route path="/HOF" component={HOF} />
 
-        <Route path="/announement" component={announement} />} />
-        <Route path="/challenges" component={challenges} />} />
-        <Route path="/country" component={country} />} />
-        <Route path="/changeLog" component={changeLog} />} />
-        <Route path="/featureRequest" component={featureRequest} />} />
-        <Route path="/HOF" component={HOF} />} />
-        <Route path="/rules" component={rules} />} />
-        <Route path="/startingPoint" component={startingPoint} />} />
-        <Route path="/support" component={support} />} />
-        <Route path="/team" component={team} />} />
-        <Route path="/universities" component={universities} />} />
-        <Route path="/university" component={university} />} />
-        <Route path="/VIP" component={VIP} />} />
+        <Route path="/announement" component={announement} />
+        <Route path="/challenges" component={challenges} />
+        <Route path="/country" component={country} />
+        <Route path="/changeLog" component={changeLog} />
+        <Route path="/featureRequest" component={featureRequest} />
+        <Route path="/rules" component={rules} />
+        <Route path="/startingPoint" component={startingPoint} />
+        <Route path="/support" component={support} />
+        <Route path="/team" component={team} />
+        <Route path="/universities" component={universities} />
+        <Route path="/university" component={university} />
+        <Route path="/VIP" component={VIP} />
+        <Route path="/dashboard" component={dashboard} />
 
         <Redirect from="/" to="/login" />
       </Switch>

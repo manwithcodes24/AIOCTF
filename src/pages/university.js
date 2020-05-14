@@ -1,5 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
+import NavBar from '../component/NavBar'
 
 export default function university() {
 
