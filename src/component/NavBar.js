@@ -160,9 +160,7 @@ const useStyles = makeStyles((theme) => ({
 
   },
   titleRoot:{
-  
-    top:'20%',
-    left:'5%',
+   marginTop:'10%'
   }, 
   paper: {
     padding: theme.spacing(2),

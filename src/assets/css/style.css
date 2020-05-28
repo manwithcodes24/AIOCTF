@@ -9,11 +9,11 @@ body {
 	color:
 #57c95b;
 	background:#1e2125;
-	display: flex;
-	overflow: hidden;
-	justify-content: center;
+	
+	overflow-x: hidden; 
+	
 	align-items: center;
-	flex-direction: column;
+	
 	font-family: 'Montserrat', sans-serif;
 	height: 100vh;
 	margin: 0 ;
@@ -280,4 +280,13 @@ input {
 }
 .AppTitle_section2 {
 	
+}
+.rulesCounting{
+	border: 1px solid green;
+	color: green;
+	width: 5% ;
+	align-items: center;
+	align-content: center ;
+	padding-left: 5px;
+	border-radius: 20px
 }

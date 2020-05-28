@@ -3,9 +3,23 @@ import '../assets/css/style.css';
 import { TransitionGroup } from 'react-transition-group';
 import Particles from 'react-particles-js'; 
 // reactstrap components
+import axios from "axios";
+
 import { BrowserRouter, Route, Switch, Redirect, Link } from "react-router-dom";
 import particleComponent from '../component/particle.js'
-function signupPage() {
+import Alert from '../component/Alert'
+import { stat } from "fs";
+
+
+
+
+
+function SignupPage() {
+  const [name, setName] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [email, setEmail] = React.useState('') ;
+  const [university, setUniversity] = React.useState('') ;
+  const [status , setStatus] = React.useState(0)
   const particlesOptions = {
     "particles": {
       "number": {
@@ -130,6 +144,37 @@ function signupPage() {
   //     document.body.classList.remove("sidebar-collapse");
   //   };
   // });
+
+  const GoToLogin= () => {
+   setStatus('200')
+  }
+  const handleSubmit = event => {
+    {console.log(name, email , password, university)}
+    event.preventDefault();
+
+    const user = {
+      "username": name,
+      "Email" : email, 
+      
+      "University" : university,
+      "Password" : password ,
+    };
+    axios.post(`http://localhost:8000/user/UserRegister`, user )
+      .then(res => {
+        console.log(res)
+       const data = res.data
+       if(res.status===200){
+        setStatus(res.data)
+        console.log(status)
+       }
+       
+       
+      }).catch(e => {
+       
+      }  
+      )
+  }
+  
   return (
     
       
@@ -142,7 +187,7 @@ function signupPage() {
   params={particlesOptions} />
     <div className="container" id="container">
       <div className="form-container sign-in-container" >
-        <form action>
+        <form onSubmit={handleSubmit}>
           <h1>Create Account</h1>
           <div className="social-container">
             <a href="#" className="social"><i className="fa fa-facebook" /></a>
@@ -150,10 +195,13 @@ function signupPage() {
             <a href="#" className="social"><i className="fa fa-linkedin" /></a>
           </div>
           <span>or use your email for registration</span>
-          <input type="text" name="name" placeholder="Name" />
-          <input type="email" name="email" placeholder="Email" />
-          <input type="password" name="password" placeholder="Password" />
-          <button>Sign Up</button>
+          <input type="text" name="name" placeholder="Name" onChange={(event) => {setName(event.target.value)}} /> 
+          <input type="email" name="email" placeholder="Email" onChange={(event) => {setEmail(event.target.value)}}/>
+          <input type="text" name="university" placeholder="University" onChange={(event) => {setUniversity(event.target.value)}} />
+
+          <input type="password" name="password" placeholder="Password" onChange={(event) => {setPassword(event.target.value)}}/>
+          
+          <button type="submit">Sign Up</button>
         </form>
       </div>
       <div className="form-container sign-up-container">
@@ -168,7 +216,7 @@ function signupPage() {
           <input type="email" name="email" placeholder="Email" />
           <input type="password" name="password" placeholder="Password" />
           <a href="#">Forgot Your Password</a>
-          <button>Sign In</button>
+          <button >Sign In</button>
         </form>
       </div>
       <div className="overlay-container">
@@ -181,7 +229,8 @@ function signupPage() {
           <div className="overlay-panel overlay-left">
             <h1>Hello, Friend!</h1>
             <p>Enter your details and start journey with us</p>
-            <button className="ghost" id="signUp">Sign Up</button>
+            <button> className="ghost" id="signUp">Sign Up</button>
+            {status=='200' ? ( <Alert severity="success">This is a success alert — check it out!</Alert> ) : (<div> </div> )}
           </div>
         </div>
       </div>
@@ -193,4 +242,4 @@ function signupPage() {
   );
 }
 
-export default signupPage;
+export default SignupPage;
