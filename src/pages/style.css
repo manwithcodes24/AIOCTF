@@ -9,15 +9,13 @@ body {
 	color:
 #57c95b;
 	background: #f6f5f7;
-	display: flex;
-	overflow: hidden;
-	justify-content: center;
+	
 	align-items: center;
-	flex-direction: column;
 	font-family: 'Montserrat', sans-serif;
 	height: 100vh;
 	margin: 0 ;
 	padding: 0 ;
+	overflow: scroll;
 }
 .particles {
 	position: fixed;
@@ -274,4 +272,7 @@ input {
 	margin:10px;
 	font-size:0.9rem;
 	color:darkGrey;
+}
+.MuiTypography-body1{
+	font-size: 1em ;
 }
