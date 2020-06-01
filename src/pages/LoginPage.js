@@ -2,12 +2,21 @@ import React from "react";
 import '../assets/css/style.css';
 import { TransitionGroup } from 'react-transition-group';
 import Particles from 'react-particles-js'; 
-import NavBar from '../component/NavBar'
+import NavBar from '../component/NavBar';
+import axios from "axios";
 // reactstrap components
 import { BrowserRouter, Route, Switch, Redirect, Link } from "react-router-dom";
 import particleComponent from '../component/particle.js';
 function LoginPage() {
+  
+
+  const [password, setPassword] = React.useState('');
+  const [email, setEmail] = React.useState('') ;
+  const [status , setStatus] = React.useState(0)
+
+
   const particlesOptions = {
+
     "particles": {
       "number": {
         "value": 60,
@@ -131,6 +140,32 @@ function LoginPage() {
       document.body.classList.remove("sidebar-collapse");
     };
   });
+  const handleSubmit = event => {
+    {console.log(email , password)}
+    event.preventDefault();
+
+    const user = {
+      
+      "Email" : email, 
+      "Password" : password ,
+    };
+    
+    axios.post(`http://localhost:8000/user/UserLogin`, user )
+      .then(res => {
+        console.log(res)
+       const data = res.data
+       if(res.status===200){
+        setStatus(res.data)
+        console.log(status)
+       }
+       
+       
+      }).catch(e => {
+        console.log(e)
+       
+      }  
+      )
+  }
   return (
     
       
@@ -152,14 +187,15 @@ function LoginPage() {
             <a href="#" className="social"><i className="fa fa-linkedin" /></a>
           </div>
           <span>or use your email for registration</span>
-          <input type="text" name="name" placeholder="Name" />
+          <input type="text" name="name" placeholder="Name"
+           />
           <input type="email" name="email" placeholder="Email" />
           <input type="password" name="password" placeholder="Password" />
           <Link to='/signup'> <button>Sign Up</button></Link>
         </form>
       </div>
       <div className="form-container sign-in-container">
-        <form action="#">
+        <form  onSubmit={handleSubmit}>
           <h1>Sign In</h1>
           <div className="social-container">
             <a href="#" className="social"><i className="fa fa-facebook" /></a>
@@ -167,8 +203,10 @@ function LoginPage() {
             <a href="#" className="social"><i className="fa fa-linkedin" /></a>
           </div>
           <span>or use your account</span>
-          <input type="email" name="email" placeholder="Email" />
-          <input type="password" name="password" placeholder="Password" />
+          <input type="email" name="email" placeholder="Email" 
+           onChange={(event) => {setEmail(event.target.value)}}/>
+          <input type="password" name="password" placeholder="Password"
+           onChange={(event) => {setPassword(event.target.value)}} />
           <a href="#">Forgot Your Password</a>
           <button>Sign In</button>
         </form>

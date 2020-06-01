@@ -159,6 +159,7 @@ function SignupPage() {
       "University" : university,
       "Password" : password ,
     };
+    
     axios.post(`http://localhost:8000/user/UserRegister`, user )
       .then(res => {
         console.log(res)
@@ -170,6 +171,7 @@ function SignupPage() {
        
        
       }).catch(e => {
+        console.log(e)
        
       }  
       )
@@ -195,11 +197,15 @@ function SignupPage() {
             <a href="#" className="social"><i className="fa fa-linkedin" /></a>
           </div>
           <span>or use your email for registration</span>
-          <input type="text" name="name" placeholder="Name" onChange={(event) => {setName(event.target.value)}} /> 
-          <input type="email" name="email" placeholder="Email" onChange={(event) => {setEmail(event.target.value)}}/>
-          <input type="text" name="university" placeholder="University" onChange={(event) => {setUniversity(event.target.value)}} />
+          <input type="text" name="name" placeholder="Name" 
+          onChange={(event) => {setName(event.target.value)}} /> 
+          <input type="email" name="email" placeholder="Email" 
+          onChange={(event) => {setEmail(event.target.value)}}/>
+          <input type="text" name="university" placeholder="University" 
+          onChange={(event) => {setUniversity(event.target.value)}} />
 
-          <input type="password" name="password" placeholder="Password" onChange={(event) => {setPassword(event.target.value)}}/>
+          <input type="password" name="password" placeholder="Password"
+           onChange={(event) => {setPassword(event.target.value)}}/>
           
           <button type="submit">Sign Up</button>
         </form>
