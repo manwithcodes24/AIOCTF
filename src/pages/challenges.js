@@ -5,8 +5,7 @@ import NavBar from '../component/NavBar'
 import '../assets/css/style.css'
 import { makeStyles } from '@material-ui/core/styles';
 import {Grid, Typography, List, ListItem, ListItemText} from '@material-ui/core'
-
-
+//import LoginPage from "./pages/LoginPage.js";
 const drawerWidth = 240;
 const contentWidth = 200 ; 
 const useStyles = makeStyles((theme) => ({
@@ -52,9 +51,7 @@ const useStyles = makeStyles((theme) => ({
           marginBottom:'2%' ,
       },
 }))
-
-
-
+//posting of a challenge
 
 
 function generate(element) {
@@ -65,15 +62,84 @@ function generate(element) {
     );
   }
 
-export default function Challenges() {
+export default function Challenges(props) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
+    const [status,setStatus] = React.useState(0);
+    const [Allchallenges,setChallenges]= React.useState([])
      const callback = (count) => {
           setOpen(count)
           console.log(open)
+
     
         }
+  fetch('http://localhost:8000/challenges',{
+  method:'Post',
+  headers:{
+    'Content-Type' : 'application/json',
+    Authorization : `Token $(this.props.token)`   
+  },
+  //body:JSON.stringify(challenges)
+}).then(
+res=>{
+  console.log(res)
+       const data = res.data
+       if(res.status===200){
+        setStatus(res.data)
+        console.log(status)
+
+      
+       }
+       else
+       {
+        window.location.href="/login"
+       }
+
+}
+
+)
+.then(
+  data=>{
+
+}).catch(err=>console.log(err))
+
+//getting all challenges
+
+fetch('http://localhost:8000/challenges',{
+  method:'Get',
+  headers:{
+    'Content-Type' : 'application/json',
+    Authorization : `Token $(this.props.token)`   
+  },
+}).then(
+res=>{
+  console.log(res)
+       const data = res.data
+       if(res.status===200){
+        setStatus(res.data)
+        setChallenges(res.data)
+        console.log(status)
+
+      
+       }
+       else
+       {
+        window.location.href="/login"
+       }
+
+}
+
+)
+.then(
+  data=>{
+
+}).catch(err=>console.log(err))
+
+
     return(
+
+     
+      
         <div>
        <div>
        <NavBar  name='Challenges' parentCallback={callback} description="is an online platform allowing you to test and advance your skills in cyber security. Use it responsibly and don't hack your fellow members..." /> 
@@ -101,5 +167,6 @@ export default function Challenges() {
 </Grid>
        </div>
        </div>
+               
     )
 }

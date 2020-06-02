@@ -7,6 +7,7 @@ import axios from "axios";
 // reactstrap components
 import { BrowserRouter, Route, Switch, Redirect, Link } from "react-router-dom";
 import particleComponent from '../component/particle.js';
+
 function LoginPage() {
   
 
@@ -157,8 +158,19 @@ function LoginPage() {
        if(res.status===200){
         setStatus(res.data)
         console.log(status)
+        this.props.UserLogin(data.access)
        }
-       
+       else if(res.status===400 && data.Error==="Invalid credentials")
+       {
+        console.log("Invalid credentials")
+        window.location.href="/login"
+       }
+       else if (res.status===400 && data.Error==="Please provide username/password")
+       {
+        console.log("Please provide username/ password")
+        window.location.href="/login"
+       }
+
        
       }).catch(e => {
         console.log(e)
@@ -229,7 +241,7 @@ function LoginPage() {
   </div>
 </div>
 
-   
+
   );
 }
 

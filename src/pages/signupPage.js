@@ -167,11 +167,16 @@ function SignupPage() {
        if(res.status===200){
         setStatus(res.data)
         console.log(status)
+        window.location.href="/login"
+       }
+       else if (res.data.Email==="user detail with the Email already exists")
+       {
+        window.location.href="/signup"
        }
        
        
       }).catch(e => {
-        console.log(e)
+        console.log("****signing up error",e)
        
       }  
       )
@@ -236,7 +241,9 @@ function SignupPage() {
             <h1>Hello, Friend!</h1>
             <p>Enter your details and start journey with us</p>
             <button> className="ghost" id="signUp">Sign Up</button>
-            {status=='200' ? ( <Alert severity="success">This is a success alert — check it out!</Alert> ) : (<div> </div> )}
+            {status=='200' ?
+             ( <Alert severity="success">
+              This is a success alert — check it out!</Alert> ) : (<div> </div> )}
           </div>
         </div>
       </div>
