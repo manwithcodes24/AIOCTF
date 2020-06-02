@@ -56,7 +56,79 @@ const useStyles = makeStyles((theme) => ({
 export default function Rules() {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
-    const callback = (count) => {
+
+
+
+const [title, setTitle] = React.useState('');
+const [description, setDescription] = React.useState('');
+const [rules,setRules] = React.useState([]);
+  
+
+// getting rules
+fetch('http://localhost:8000/rules',{
+  method:'Get',
+  headers:{
+    'Content-Type' : 'application/json',
+    Authorization : `Token $(this.props.token)`   
+  },
+}).
+then(
+res=>{
+  console.log(res)
+       const data = res.data
+       if(res.status===200){
+       setRules(res.data)
+       // console.log(status)
+
+      
+       }
+       else
+       {
+        window.location.href="/login"
+       }
+
+}
+
+)
+.catch(err=>console.log(err))
+
+
+//posting rules
+
+
+ const newRule = {
+      "RuleTitle": title,
+      "RuleDescription" : description 
+    }; 
+
+
+fetch('http://localhost:8000/announcements',{
+  method:'Post',
+  headers:{
+    'Content-Type' : 'application/json',
+    Authorization : `Token $(this.props.token)`   
+  },
+  body:newRule
+}).
+then(
+res=>{
+  console.log(res)
+       const data = res.data
+       if(res.status===200)
+       {
+       console.log(res.status)
+
+      
+       }
+       else
+       {
+        window.location.href="/signup"
+       }
+
+})
+.catch(err=>console.log(err))
+
+const callback = (count) => {
          setOpen(count)
          console.log(open)
    
