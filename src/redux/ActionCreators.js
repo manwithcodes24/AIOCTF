@@ -62,6 +62,7 @@ export const loginUser = (creds) => (dispatch) => {
              dispatch(fetchrules());
              dispatch(fetchchallenges());
              dispatch(fetchuniversities());
+             dispatch(fetchtotal());
             dispatch(receiveLogin(response));
         }
         else {
@@ -142,8 +143,58 @@ export const logoutUser = () => (dispatch) => {
     dispatch(favoritesFailed("Error 401: Unauthorized"));
     dispatch(receiveLogout())
 }
+
+
+export const fetchtotal = () => (dispatch) => {
+    
+
+
+
+    const bearer = 'Bearer ' + localStorage.getItem('token');
+
+    return fetch('http://localhost:8000/total', {
+        headers: {
+            'Authorization': bearer
+        },
+    })
+    .then(response => {
+        if (response.ok) {
+            return response;
+        }
+        else {
+            var error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+        }
+    },
+    error => {
+        var errmess = new Error(error.message);
+        throw errmess;
+    })
+    .then(response => response.json())
+    .then(total => dispatch(addtotal(total)))
+    .catch(error => dispatch(totalFailed(error.message)));
+}
+
+
+
+export const totalFailed = (errmess) => ({
+    type: ActionTypes.TOTAL_FAILED,
+    payload: errmess
+});
+
+export const addannouncements = (announcements) => ({
+    type: ActionTypes.ADD_TOTAL,
+    payload: total
+});
+
+
+
 export const fetchannouncements = () => (dispatch) => {
     
+
+
+
     const bearer = 'Bearer ' + localStorage.getItem('token');
 
     return fetch('http://localhost:8000/announcements', {
@@ -166,10 +217,7 @@ export const fetchannouncements = () => (dispatch) => {
         throw errmess;
     })
     .then(response => response.json())
-    .then(announcements => dispatch(addannouncements(announcemets)))
-    .then(rules => dispatch(addrules(rules)))
-    .then(challenges => dispatch(addchallenges(challenges)))
-    .then(universities => dispatch(adduniversitiess(universitiess)))
+    .then(announcements => dispatch(addannouncements(announcements)))
     .catch(error => dispatch(announcementsFailed(error.message)));
 }
 
@@ -186,45 +234,9 @@ export const addannouncements = (announcements) => ({
 });
 
 
-export const fetchrules = () => (dispatch) => {
-    
-    const bearer = 'Bearer ' + localStorage.getItem('token');
-
-    return fetch('http://localhost:8000/rules', {
-        headers: {
-            'Authorization': bearer
-        },
-    })
-    .then(response => {
-        if (response.ok) {
-            return response;
-        }
-        else {
-            var error = new Error('Error ' + response.status + ': ' + response.statusText);
-            error.response = response;
-            throw error;
-        }
-    },
-    error => {
-        var errmess = new Error(error.message);
-        throw errmess;
-    })
-    .then(response => response.json())
-    .then(announcements => dispatch(addrules(rules)))
-    .catch(error => dispatch(rulesFailed(error.message)));
-}
 
 
 
-export const rulesFailed = (errmess) => ({
-    type: ActionTypes.RULES_FAILED,
-    payload: errmess
-});
-
-export const addrules = (rules) => ({
-    type: ActionTypes.ADD_RULES,
-    payload: rules
-});
 
 export const fetchrules = () => (dispatch) => {
     
@@ -250,7 +262,7 @@ export const fetchrules = () => (dispatch) => {
         throw errmess;
     })
     .then(response => response.json())
-    .then(announcements => dispatch(addrules(rules)))
+    .then(rules => dispatch(addrules(rules)))
     .catch(error => dispatch(rulesFailed(error.message)));
 }
 

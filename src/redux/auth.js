@@ -126,7 +126,7 @@ export const Rules = (state = {
 
 export const Universities = (state = {
         errMess: null,
-        rules: null
+        universities: null
     }, action) => {
     switch(action.type) {
         case ActionTypes.ADD_UNIVERSITES:
@@ -134,6 +134,21 @@ export const Universities = (state = {
 
         case ActionTypes.UNIVERSITIES_FAILED:
             return {...state, errMess: action.payload, universities: null};
+
+        default:
+            return state;
+    }
+}
+export const Total = (state = {
+        errMess: null,
+        total: null
+    }, action) => {
+    switch(action.type) {
+        case ActionTypes.ADD_TOTAL:
+            return {...state,  errMess: null, total: action.payload};
+
+        case ActionTypes.TOTAL_FAILED:
+            return {...state, errMess: action.payload, total: null};
 
         default:
             return state;

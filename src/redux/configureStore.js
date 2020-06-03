@@ -1,5 +1,5 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-import { Auth ,Rules, Announcements,Challenges,Universities} from './auth';
+import { Auth ,Rules, Announcements,Challenges,Universities,Total} from './auth';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 
@@ -15,7 +15,9 @@ export const ConfigureStore = () => {
             signupuser:SignUpUser,
             announcements:Announcements,
             universities:Universities,
-            challenges:Challenges
+            challenges:Challenges,
+            total:Total
+
         }),
         applyMiddleware(thunk, logger)
     );

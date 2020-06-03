@@ -59,6 +59,8 @@ const useStyles = makeStyles((theme) => ({
 export default function Challenges(props) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
+     const [key, setKey] = React.useState('');
+     const [challenge_Id, setchallenege_id] = React.useState('');
     //const [status,setStatus] = React.useState(0);
    // const [Allchallenges,setChallenges]= React.useState([])
      const callback = (count) => {
@@ -67,6 +69,33 @@ export default function Challenges(props) {
 
     
         }
+
+
+const handleSubmit = event => {
+    {
+      const data ={
+        challengeKey : key,
+        challengeId : challenge_Id
+      };
+      const bearer = 'Bearer ' + localStorage.getItem('token');
+       fetch('http://localhost:8000/academics/checkResult?id={challenge_Id}',{
+        method :'POST',
+        headers: {
+            'Authorization': bearer
+        },
+        body :JSON.stringify(data)
+
+       }).then(response => response.json())
+       .then(data =>{console.log("Success")})
+       .catch((error)=>{console.log("error in sending key",error)})
+
+    }
+    event.preventDefault();
+
+    
+    
+    
+  }  
  
 
     return(
@@ -102,6 +131,19 @@ export default function Challenges(props) {
                 <ListItemText
                  
                 > {list.Answer}</ListItemText>
+                <ListItem>
+
+                 <Form onSubmit={handleSubmit}>
+              <Label for="key">Key</Label>
+              <input type="string" name="key" placeholder=""
+              onChange={(event) => {setKey(event.target.value)}}/>
+              <input type="hidden" name="challengeId" 
+              value= {setchallenege_id({list.id})}/>
+          
+          <button type="submit">Submit key</button>
+          
+                </Form>
+                </ListItem>
                 
               </ListItem>
 

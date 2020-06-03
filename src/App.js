@@ -29,7 +29,7 @@ import university from './pages/university.js'
 import VIP from './pages/VIP.js'
 import dashboard from "./pages/dashboard.js";
 import {loginUser, 
-  logoutUser,signupUser, fetchannouncements,fetchrules,fetchchallenges,fetchuniversities } 
+  logoutUser,signupUser, fetchannouncements,fetchrules,fetchchallenges,fetchuniversities,fetchtotal } 
   from '../redux/ActionCreators';
 
 
@@ -51,6 +51,7 @@ const mapDispatchToProps = (dispatch) => ({
    fetchuniversities: () => dispatch(fetchuniversities()),
     fetchchallenges: () => dispatch(fetchchallenges()),
      fetchrules: () => dispatch(fetchrules()),
+     fetchtotal : ()=>dispatch(fetchtotal());
   
 });
 
@@ -61,6 +62,7 @@ class App extends Component {
     this.props.fetchuniversities();
     this.props.fetchchallenges();
     this.props.fetchrules();
+    this.props.fetchtotal();
 
   }
 
@@ -86,15 +88,12 @@ render() {
         <Route path='/login' component={ ()=>
           <LoginPage loginUser={this.props.loginUser} 
           logoutUser={this.props.logoutUser}  />} />
+          
           <Route path='/sign' component={ ()=>
           <signupPage signupUser={this.props.signupUser} 
             />} />
        
-        //<Route path="/access" component={access } />
-      //  <Route path="/badges" component={badges} />
-        <Route path="/HOF" component={HOF} />
-
-     //   <Route path="/announcement" component={announcement} />
+        
 
  <PrivateRoute exact path="/rules" component={() =>
   <rules rules={this.props.rules}  />} />
@@ -104,10 +103,13 @@ render() {
 
  <PrivateRoute exact path="/challenges" component={() =>
   <challenges challenges={this.props.challenges}  />} />
+  
   <PrivateRoute exact path="/universities" component={() =>
   <universities universities={this.props.universities}  />} />
-  <Route path="/dashboard" component={dashboard} />
-  <Route path="/featureRequest" component={featureRequest} />
+  
+  <PrivateRoute exactpath="/dashboard" component={()=>
+    <dashboard total={this.props.total}/>} />
+  
 
   <Redirect to="/login" />
       </Switch>
@@ -117,20 +119,7 @@ render() {
 }
 }
 
- //<PrivateRoute exact path="/universities" component={() =>
-  //<universities universities={this.props.universities}  />} />
-     ///   <Route path="/challenges" component={challenges } />
-        //<Route path="/country" component={country} />
-        //<Route path="/changeLog" component={changeLog} />
-
-        //<Route path="/rules" component={rules} />
-        //<Route path="/startingPoint" component={startingPoint} />
-        //<Route path="/support" component={support} />
-        //<Route path="/team" component={team} />
-     //   <Route path="/universities" component={universities} />
-       // <Route path="/university" component={university} />
-        //<Route path="/VIP" component={VIP} />
-
+ 
         
 
         
