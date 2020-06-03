@@ -8,7 +8,7 @@ import axios from "axios";
 import { BrowserRouter, Route, Switch, Redirect, Link } from "react-router-dom";
 import particleComponent from '../component/particle.js';
 
-function LoginPage() {
+function LoginPage(props) {
   
 
   const [password, setPassword] = React.useState('');
@@ -142,41 +142,17 @@ function LoginPage() {
     };
   });
   const handleSubmit = event => {
-    {console.log(email , password)}
+    {
+      console.log(email , password)
+
+      this.props.loginUser({Email:email, Password: password});
+    }
     event.preventDefault();
 
-    const user = {
-      
-      "Email" : email, 
-      "Password" : password ,
-    };
     
-    axios.post(`http://localhost:8000/user/UserLogin`, user )
-      .then(res => {
-        console.log(res)
-       const data = res.data
-       if(res.status===200){
-        setStatus(res.data)
-        console.log(status)
-        this.props.UserLogin(data.access)
-       }
-       else if(res.status===400 && data.Error==="Invalid credentials")
-       {
-        console.log("Invalid credentials")
-        window.location.href="/login"
-       }
-       else if (res.status===400 && data.Error==="Please provide username/password")
-       {
-        console.log("Please provide username/ password")
-        window.location.href="/login"
-       }
-
-       
-      }).catch(e => {
-        console.log(e)
-       
-      }  
-      )
+    
+    
+      
   }
   return (
     
@@ -193,12 +169,8 @@ function LoginPage() {
       <div className="form-container sign-up-container" >
         <form action>
           <h1>Create Account</h1>
-          <div className="social-container">
-            <a href="#" className="social"><i className="fa fa-facebook" /></a>
-            <a href="#" className="social"><i className="fa fa-google" /></a>
-            <a href="#" className="social"><i className="fa fa-linkedin" /></a>
-          </div>
-          <span>or use your email for registration</span>
+          
+          <span>Use your email for registration</span><br/>
           <input type="text" name="name" placeholder="Name"
            />
           <input type="email" name="email" placeholder="Email" />
@@ -209,12 +181,8 @@ function LoginPage() {
       <div className="form-container sign-in-container">
         <form  onSubmit={handleSubmit}>
           <h1>Sign In</h1>
-          <div className="social-container">
-            <a href="#" className="social"><i className="fa fa-facebook" /></a>
-            <a href="#" className="social"><i className="fa fa-google" /></a>
-            <a href="#" className="social"><i className="fa fa-linkedin" /></a>
-          </div>
-          <span>or use your account</span>
+          
+          <span> use your account</span><br/>
           <input type="email" name="email" placeholder="Email" 
            onChange={(event) => {setEmail(event.target.value)}}/>
           <input type="password" name="password" placeholder="Password"

@@ -1,13 +1,14 @@
 
-import React ,{useState}from "react";
+import React ,{Component}from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+//import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 // styles for this kit
 
 // pages for this kit
 
-
+import { BrowserRouter,Switch, Route, Redirect, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import LoginPage from "./pages/LoginPage.js";
 import signupPage from './pages/signupPage.js';
 
@@ -27,44 +28,114 @@ import universities from './pages/universities.js'
 import university from './pages/university.js'
 import VIP from './pages/VIP.js'
 import dashboard from "./pages/dashboard.js";
-function App(props){
-  const [token, setToken] = useState('');
-  const userLogin= (tok)=>{
-    setToken(tok);
-  }
-return(
-  <BrowserRouter>
-    <Switch>
-      <Switch>
-        
-        
-        
-       <Route path='/signup' component={signupPage} />
-        <Route path="/login"  component={()=> <LoginPage userLogin={userLogin} />} />
-        <Route path="/access" component={access } />
-        <Route path="/badges" component={badges} />
-        <Route path="/HOF" component={HOF} />
+import {loginUser, 
+  logoutUser,signupUser, fetchannouncements,fetchrules,fetchchallenges,fetchuniversities } 
+  from '../redux/ActionCreators';
 
-        <Route path="/announcement" component={()=> <announcement />} />
-        <Route path="/challenges" component={()=> <challenges token={token} />} />
-        <Route path="/country" component={country} />
-        <Route path="/changeLog" component={changeLog} />
-        <Route path="/featureRequest" component={featureRequest} />
-        <Route path="/rules" component={rules} />
-        <Route path="/startingPoint" component={startingPoint} />
-        <Route path="/support" component={support} />
-        <Route path="/team" component={team} />
-        <Route path="/universities" component={universities} />
-        <Route path="/university" component={university} />
-        <Route path="/VIP" component={VIP} />
-        <Route path="/dashboard" component={dashboard} />
 
-        <Redirect from="/" to="/login" />
-      </Switch>
-    </Switch>
-  </BrowserRouter>
 
-);
+
+const mapStateToProps = state => {
+    return {
+      announcements : state.announcements,
+      challenges : state.challenges,
+      universities:state.universities,
+      auth: state.auth
+    }
 }
 
-export default App;
+const mapDispatchToProps = (dispatch) => ({
+  loginUser: (creds) => dispatch(loginUser(creds)),
+  logoutUser: () => dispatch(logoutUser()),
+  fetchannouncements: () => dispatch(fetchannouncements()),
+   fetchuniversities: () => dispatch(fetchuniversities()),
+    fetchchallenges: () => dispatch(fetchchallenges()),
+     fetchrules: () => dispatch(fetchrules()),
+  
+});
+
+class App extends Component {
+  componentDidMount() {
+   
+    this.props.fetchannouncements();
+    this.props.fetchuniversities();
+    this.props.fetchchallenges();
+    this.props.fetchrules();
+
+  }
+
+render() {
+
+
+  const PrivateRoute = ({ component: Component, ...rest }) => (
+      <Route {...rest} render={(props) => (
+        this.props.auth.isAuthenticated
+          ? <Component {...props} />
+          : <Redirect to={{
+              pathname: '/login',
+              state: { from: props.location }
+            }} />
+      )} />
+    );
+  return(
+    <BrowserRouter>
+
+    <Switch>
+    
+        
+        <Route path='/login' component={ ()=>
+          <LoginPage loginUser={this.props.loginUser} 
+          logoutUser={this.props.logoutUser}  />} />
+          <Route path='/sign' component={ ()=>
+          <signupPage signupUser={this.props.signupUser} 
+            />} />
+       
+        //<Route path="/access" component={access } />
+      //  <Route path="/badges" component={badges} />
+        <Route path="/HOF" component={HOF} />
+
+     //   <Route path="/announcement" component={announcement} />
+
+ <PrivateRoute exact path="/rules" component={() =>
+  <rules rules={this.props.rules}  />} />
+
+ <PrivateRoute exact path="/announcement" component={() =>
+  <announcement announcements={this.props.announcements}  />} />
+
+ <PrivateRoute exact path="/challenges" component={() =>
+  <challenges challenges={this.props.challenges}  />} />
+  <PrivateRoute exact path="/universities" component={() =>
+  <universities universities={this.props.universities}  />} />
+  <Route path="/dashboard" component={dashboard} />
+  <Route path="/featureRequest" component={featureRequest} />
+
+  <Redirect to="/login" />
+      </Switch>
+  </BrowserRouter>
+
+    )
+}
+}
+
+ //<PrivateRoute exact path="/universities" component={() =>
+  //<universities universities={this.props.universities}  />} />
+     ///   <Route path="/challenges" component={challenges } />
+        //<Route path="/country" component={country} />
+        //<Route path="/changeLog" component={changeLog} />
+
+        //<Route path="/rules" component={rules} />
+        //<Route path="/startingPoint" component={startingPoint} />
+        //<Route path="/support" component={support} />
+        //<Route path="/team" component={team} />
+     //   <Route path="/universities" component={universities} />
+       // <Route path="/university" component={university} />
+        //<Route path="/VIP" component={VIP} />
+
+        
+
+        
+    
+
+
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

@@ -51,90 +51,23 @@ const useStyles = makeStyles((theme) => ({
           marginBottom:'2%' ,
       },
 }))
-//posting of a challenge
 
 
-function generate(element) {
-    return [0, 1, 2].map((value) =>
-      React.cloneElement(element, {
-        key: value,
-      }),
-    );
-  }
+
+
 
 export default function Challenges(props) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
-    const [status,setStatus] = React.useState(0);
-    const [Allchallenges,setChallenges]= React.useState([])
+    //const [status,setStatus] = React.useState(0);
+   // const [Allchallenges,setChallenges]= React.useState([])
      const callback = (count) => {
           setOpen(count)
           console.log(open)
 
     
         }
-  fetch('http://localhost:8000/challenges',{
-  method:'Post',
-  headers:{
-    'Content-Type' : 'application/json',
-    Authorization : `Token $(this.props.token)`   
-  },
-  //body:JSON.stringify(challenges)
-}).then(
-res=>{
-  console.log(res)
-       const data = res.data
-       if(res.status===200){
-        setStatus(res.data)
-        console.log(status)
-
-      
-       }
-       else
-       {
-        window.location.href="/login"
-       }
-
-}
-
-)
-.then(
-  data=>{
-
-}).catch(err=>console.log(err))
-
-//getting all challenges
-
-fetch('http://localhost:8000/challenges',{
-  method:'Get',
-  headers:{
-    'Content-Type' : 'application/json',
-    Authorization : `Token $(this.props.token)`   
-  },
-}).then(
-res=>{
-  console.log(res)
-       const data = res.data
-       if(res.status===200){
-        setStatus(res.data)
-        setChallenges(res.data)
-        console.log(status)
-
-      
-       }
-       else
-       {
-        window.location.href="/login"
-       }
-
-}
-
-)
-.then(
-  data=>{
-
-}).catch(err=>console.log(err))
-
+ 
 
     return(
 
@@ -154,13 +87,26 @@ res=>{
         </Typography>
         <div className={classes.demo}>
           <List >
-            {generate(
-              <ListItem className={classes.challengesListItem} >
+               {props.announcemet.map( list => (
+<ListItem  key={list.id} className={classes.challengesListItem} >
                 <ListItemText
                  
-                >Challenge  </ListItemText>
-              </ListItem>,
-            )}
+                > {list.Category}</ListItemText>
+              
+                <ListItemText
+                 
+                > {list.Title}</ListItemText>
+                <ListItemText
+                 
+                > {list.TimeLimitation}</ListItemText>
+                <ListItemText
+                 
+                > {list.Answer}</ListItemText>
+                
+              </ListItem>
+
+              )
+              )}
           </List>
         </div>
       </Grid>

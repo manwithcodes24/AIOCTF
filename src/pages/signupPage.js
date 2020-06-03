@@ -148,38 +148,17 @@ function SignupPage() {
   const GoToLogin= () => {
    setStatus('200')
   }
+
   const handleSubmit = event => {
-    {console.log(name, email , password, university)}
+    {console.log(name, email , password, university)
+       this.props.signupUser({Email:email,Name:name,University:university, Password: password});
+
+    }
     event.preventDefault();
 
-    const user = {
-      "username": name,
-      "Email" : email, 
-      
-      "University" : university,
-      "Password" : password ,
-    };
     
-    axios.post(`http://localhost:8000/user/UserRegister`, user )
-      .then(res => {
-        console.log(res)
-       const data = res.data
-       if(res.status===200){
-        setStatus(res.data)
-        console.log(status)
-        window.location.href="/login"
-       }
-       else if (res.data.Email==="user detail with the Email already exists")
-       {
-        window.location.href="/signup"
-       }
-       
-       
-      }).catch(e => {
-        console.log("****signing up error",e)
-       
-      }  
-      )
+    
+    
   }
   
   return (
@@ -196,12 +175,8 @@ function SignupPage() {
       <div className="form-container sign-in-container" >
         <form onSubmit={handleSubmit}>
           <h1>Create Account</h1>
-          <div className="social-container">
-            <a href="#" className="social"><i className="fa fa-facebook" /></a>
-            <a href="#" className="social"><i className="fa fa-google" /></a>
-            <a href="#" className="social"><i className="fa fa-linkedin" /></a>
-          </div>
-          <span>or use your email for registration</span>
+          
+          <span>Use your email for registration</span><br/>
           <input type="text" name="name" placeholder="Name" 
           onChange={(event) => {setName(event.target.value)}} /> 
           <input type="email" name="email" placeholder="Email" 
@@ -218,12 +193,8 @@ function SignupPage() {
       <div className="form-container sign-up-container">
         <form action="#">
           <h1>Sign In</h1>
-          <div className="social-container">
-            <a href="#" className="social"><i className="fa fa-facebook" /></a>
-            <a href="#" className="social"><i className="fa fa-google" /></a>
-            <a href="#" className="social"><i className="fa fa-linkedin" /></a>
-          </div>
-          <span>or use your account</span>
+          
+          <span> Use your account</span><br/>
           <input type="email" name="email" placeholder="Email" />
           <input type="password" name="password" placeholder="Password" />
           <a href="#">Forgot Your Password</a>
