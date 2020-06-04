@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState,useEffect} from 'react';
 import clsx from 'clsx';
 import NavBar from '../component/NavBar'
 
@@ -56,32 +56,58 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function Challenges(props) {
+export default function Challenges( ) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
      const [key, setKey] = React.useState('');
      const [challenge_Id, setchallenege_id] = React.useState('');
-    //const [status,setStatus] = React.useState(0);
-   // const [Allchallenges,setChallenges]= React.useState([])
+    const [challenges,setchallenges]= React.useState({})
      const callback = (count) => {
           setOpen(count)
           console.log(open)
 
     
         }
+        useEffect(()=>{
+      fetch('http://localhost:8000/challenges', {
+        headers: {
+            'Authorization': localStorage.getItem('token')
+        },
+    })
+    .then(response => {
+        if (response.ok) {
+            return response;
+        }
+        else {
+            var error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+        }
+    },
+    error => {
+        var errmess = new Error(error.message);
+        throw errmess;
+    })
+    .then(response => {
+      setchallenges(response.data)
+    })
+    .catch(error => (console.log(error.message)));
+
+            })
+
 
 
 const handleSubmit = event => {
+  //setchallenege_id(challengeId.value)
     {
       const data ={
         challengeKey : key,
-        challengeId : challenge_Id
       };
-      const bearer = 'Bearer ' + localStorage.getItem('token');
-       fetch('http://localhost:8000/academics/checkResult?id={challenge_Id}',{
+      
+       fetch('http://localhost:8000/academics/checkResult?id={challengeId.value}',{
         method :'POST',
         headers: {
-            'Authorization': bearer
+            'Authorization': localStorage.getItem('token')
         },
         body :JSON.stringify(data)
 
@@ -116,7 +142,7 @@ const handleSubmit = event => {
         </Typography>
         <div className={classes.demo}>
           <List >
-               {props.announcemet.map( list => (
+               {challenges.map( list => (
 <ListItem  key={list.id} className={classes.challengesListItem} >
                 <ListItemText
                  
@@ -133,16 +159,19 @@ const handleSubmit = event => {
                 > {list.Answer}</ListItemText>
                 <ListItem>
 
-                 <Form onSubmit={handleSubmit}>
-              <Label for="key">Key</Label>
+                 <form 
+                  onSubmit={handleSubmit} >
+              <label for="key">Key</label>
               <input type="string" name="key" placeholder=""
               onChange={(event) => {setKey(event.target.value)}}/>
-              <input type="hidden" name="challengeId" 
-              value= {setchallenege_id({list.id})}/>
+              <input type="hidden" name="challengeId"
+              value={list.id}
+               />
+              }
           
           <button type="submit">Submit key</button>
           
-                </Form>
+                </form>
                 </ListItem>
                 
               </ListItem>

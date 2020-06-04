@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import '../assets/css/style.css';
 import NavBar from '../component/NavBar'
 import upperTitle from '../component/upperTitle'
@@ -10,7 +10,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+//import Paper from '@material-ui/core/Paper';
 import clsx from 'clsx';
 import {
   
@@ -161,7 +161,26 @@ const generateData = (start, end, step ,gap) => {
 
 
 export  function SimpleModal() {
+
+  const [onOpen, setonOpen] = React.useState(false);
   const classes = useStyles();
+  // getModalStyle is not a pure function, we roll the style only on the first render
+  const [modalStyle] = React.useState(getModalStyle);
+ 
+  const handleOpen = () => {
+
+    setonOpen(true);
+  };
+
+  const handleClose = () => {
+    setonOpen(false);
+  };
+
+}
+export default function Dashboard( ) {
+  const classes = useStyles();
+  const [total,settotal] = React.useState({});
+   //const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
   const [onOpen, setonOpen] = React.useState(false);
@@ -170,14 +189,52 @@ export  function SimpleModal() {
   const [badges, setBadges] = React.useState(0);
   const [university, setUniversity] = React.useState('');
   const [points, setPoints] = React.useState(0);
+  const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => {
 
-const bearer = 'Bearer ' + localStorage.getItem('token');
-       fetch('http://localhost:8000/user/Profile',{
+    setonOpen(true);
+  };
+
+  const handleClose = () => {
+    setonOpen(false);
+  };
+  const callback = (count) => {
+      setOpen(count)
+      console.log(open)
+
+    }
+
+useEffect(()=>{
+      fetch('http://localhost:8000/total', {
+        headers: {
+            'Authorization': localStorage.getItem('token')
+        },
+    })
+    .then(response => {
+        if (response.ok) {
+            return response;
+        }
+        else {
+            var error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+        }
+    },
+    error => {
+        var errmess = new Error(error.message);
+        throw errmess;
+    })
+    .then(response => {
+      settotal(response.data)
+    })
+    .catch(error => (console.log(error.message)));
+
+
+    fetch('http://localhost:8000/user/Profile',{
         method :'GET',
         headers: {
-            'Authorization': bearer
+            'Authorization': localStorage.getItem('token')
         }
 
        }).then(response => response.json())
@@ -189,24 +246,11 @@ const bearer = 'Bearer ' + localStorage.getItem('token');
          })
        .catch((error)=>{console.log("error in sending key",error)})
 
-    }
-
-    setonOpen(true);
-  };
-
-  const handleClose = () => {
-    setonOpen(false);
-  };
 
 
-export default function Dashboard(props) {
-  const classes = useStyles();
-const [open, setOpen] = React.useState(false);
- const callback = (count) => {
-      setOpen(count)
-      console.log(open)
 
-    }
+            })
+
 const [chartData, setGraphData] = React.useState(generateData(39,50, 10))
 const body = (
     <div style={modalStyle} className={classes.paper2}>
@@ -260,13 +304,13 @@ const body = (
         </TableHead>
         <TableBody>
           
-            <TableRow key={row.name}>
+            <TableRow >
               <TableCell component="th" scope="row">
                 Numbers
               </TableCell>
-              <TableCell align="right">{props.total.users}</TableCell>
-              <TableCell align="right">{props.total.universities}</TableCell>
-              <TableCell align="right">{props.total.challenges}</TableCell>
+              <TableCell align="right">{total.users}</TableCell>
+              <TableCell align="right">{total.universities}</TableCell>
+              <TableCell align="right">{total.challenges}</TableCell>
               
             </TableRow>
         </TableBody>

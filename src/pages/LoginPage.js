@@ -1,4 +1,4 @@
-import React from "react";
+import React ,{useState,useEffect}from "react";
 import '../assets/css/style.css';
 import { TransitionGroup } from 'react-transition-group';
 import Particles from 'react-particles-js'; 
@@ -8,7 +8,7 @@ import axios from "axios";
 import { BrowserRouter, Route, Switch, Redirect, Link } from "react-router-dom";
 import particleComponent from '../component/particle.js';
 
-function LoginPage(props) {
+function LoginPage() {
   
 
   const [password, setPassword] = React.useState('');
@@ -141,11 +141,54 @@ function LoginPage(props) {
       document.body.classList.remove("sidebar-collapse");
     };
   });
+
+
   const handleSubmit = event => {
     {
-      console.log(email , password)
+      const user ={
+        Email:email, 
+        Password: password
 
-      this.props.loginUser({Email:email, Password: password});
+      }
+
+  fetch('http://localhost:8000/user/UserLogin', {
+        method: 'POST',
+        headers: { 
+            'Content-Type':'application/json' 
+        },
+        body: JSON.stringify(user)
+    })
+    .then(response => {
+        if (response.ok) {
+            return response;
+        } else {
+            var error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+        }
+        },
+        error => {
+            throw error;
+        })
+    .then(response => response.json())
+    .then(response => {
+        if (response.success) {
+            
+
+            localStorage.setItem('token', response.token);
+            localStorage.setItem('creds', JSON.stringify(user));
+           
+        }
+        else {
+            var error = new Error('Error ' + response.status);
+            error.response = response;
+            throw error;
+        }
+    })
+    .catch(error => (console.log("logging errro",error)))
+
+
+      
     }
     event.preventDefault();
 
@@ -214,3 +257,15 @@ function LoginPage(props) {
 }
 
 export default LoginPage;
+
+
+
+
+
+
+
+
+
+
+
+

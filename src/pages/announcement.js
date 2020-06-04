@@ -1,4 +1,4 @@
-import React ,{useState}from "react";
+import React ,{useState, useEffect}from "react";
 
 import clsx from 'clsx';
 import NavBar from '../component/NavBar'
@@ -6,6 +6,9 @@ import NavBar from '../component/NavBar'
 import '../assets/css/style.css'
 import { makeStyles } from '@material-ui/core/styles';
 import {Grid, Typography, List, ListItem, ListItemText} from '@material-ui/core'
+
+
+
 
 const drawerWidth = 240;
 const contentWidth = 200 ; 
@@ -51,15 +54,16 @@ const useStyles = makeStyles((theme) => ({
           backgroundColor:'#3b4046',
           marginBottom:'2%' ,
       },
-}))
+}));
 
 
 
 
+function Announcement(){
 
-function announcement(props){
-	const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
+	const classes =useStyles();
+    const [open, setOpen] = useState(false);
+    const [announcement,setannouncement] =useState({})
     //const [status,setStatus] = React.useState(0);
    // const [Allchallenges,setChallenges]= React.useState([])
      const callback = (count) => {
@@ -68,6 +72,34 @@ function announcement(props){
 
     
         }
+
+     useEffect(()=>{
+      fetch('http://localhost:8000/announcements', {
+        headers: {
+            'Authorization': localStorage.getItem('token')
+        },
+    })
+    .then(response => {
+        if (response.ok) {
+            return response;
+        }
+        else {
+            var error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+        }
+    },
+    error => {
+        var errmess = new Error(error.message);
+        throw errmess;
+    })
+    .then(response => {
+      setannouncement(response.data)
+    })
+    .catch(error => (console.log(error.message)));
+
+            })
+
 
     return(
        <div>
@@ -84,15 +116,15 @@ function announcement(props){
         </Typography>
         <div className={classes.demo}>
           <List >
-            {props.announcemet.map( list => (
+            {announcement.map( list => (
 <ListItem  key={list.id} className={classes.announcementListItem} >
                 <ListItemText
                  
-                > {list.title}</ListItemText>
+                > {list.Title}</ListItemText>
               
                 <ListItemText
                  
-                > {list.description}</ListItemText>
+                > {list.Description}</ListItemText>
                 
               </ListItem>
 
@@ -119,4 +151,11 @@ function announcement(props){
 
 
 
-export default  announcement;
+export default Announcement;
+
+
+
+
+
+
+

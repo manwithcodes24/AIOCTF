@@ -1,10 +1,10 @@
-/*import React from 'react';
+import React ,{useState, useEffect}from "react";
 import clsx from 'clsx';
-import NavBar from '../component/NavBar'
+import NavBar from '../component/NavBar';
 
-import '../assets/css/style.css'
+import '../assets/css/style.css';
 import { makeStyles } from '@material-ui/core/styles';
-import {Grid, Typography, List, ListItem, ListItemText} from '@material-ui/core'
+import {Grid, Typography, List, ListItem, ListItemText} from '@material-ui/core';
 //import LoginPage from "./pages/LoginPage.js";
 const drawerWidth = 240;
 const contentWidth = 200 ; 
@@ -52,11 +52,42 @@ const useStyles = makeStyles((theme) => ({
       },
 }))
 
-export default function universities(props) {
+function Universities( ) {
+
+
 const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
-    //const [status,setStatus] = React.useState(0);
-   // const [Allchallenges,setChallenges]= React.useState([])
+const [open, setOpen] = React.useState(false);
+const [status,setStatus] = React.useState(0);
+const [universities,setuniversities]= React.useState({})
+     
+ useEffect(()=>{
+      fetch('http://localhost:8000/academics/uni', {
+        headers: {
+            'Authorization': localStorage.getItem('token')
+        },
+    })
+    .then(response => {
+        if (response.ok) {
+            return response;
+        }
+        else {
+            var error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+        }
+    },
+    error => {
+        var errmess = new Error(error.message);
+        throw errmess;
+    })
+    .then(response => {
+      setuniversities(response.data)
+    })
+    .catch(error => (console.log(error.message)));
+
+            })
+
+
      const callback = (count) => {
           setOpen(count)
           console.log(open)
@@ -76,24 +107,25 @@ const classes = useStyles();
       <Grid container spacing={5} >
       <Grid item xs={22} md={10}>
         <Typography variant="h6" className={classes.title}>
-          Challenges
+          Universities List :
         </Typography>
         <div className={classes.demo}>
           <List >
-            {props.universities.map( list => (
+            {universities.map( list => (
 <ListItem  key={list.id} className={classes.universitiesListItem} >
                 <ListItemText
                  
-                >Name : {list.name}</ListItemText>
+                >Name : {list.Name}</ListItemText>
               
-                <ListItemText
+                <ListItemText>
                  
-                >Location : {list.location}</ListItemText>
-                <ListItemText
+                Location : {list.location}</ListItemText>
+                <ListItemText>
                  
-                >World Ranking : {list.Worldranking} </ListItemText>
-                <ListItemText
-                >Status : {list.status}</ListItemText>
+                World Ranking : {list.Worldranking} </ListItemText>
+                <ListItemText>
+                Status : {list.status}</ListItemText>
+                
               </ListItem>
 
             )	)}
@@ -109,16 +141,16 @@ const classes = useStyles();
 
 
     )
-}*/
-import React from 'react';
-import clsx from 'clsx';
-import NavBar from '../component/NavBar'
-
-export default function universities() {
-
-    return(
-       <div>
-       <NavBar  name='University' description="is an online platform allowing you to test and advance your skills in cyber security. Use it responsibly and don't hack your fellow members..." /> 
-       </div> 
-    )
 }
+
+
+
+
+
+
+
+
+
+
+
+export default Universities;

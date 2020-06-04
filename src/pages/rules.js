@@ -1,4 +1,4 @@
-import React from 'react';
+import React ,{useEffect, useState}from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
@@ -53,12 +53,37 @@ const useStyles = makeStyles((theme) => ({
       },
 }))
 
-export default function Rules(props) {
+export default function Rules( ) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
+    const [rules,setrules] =React.useState({});
 
+ useEffect(()=>{
+      fetch('http://localhost:8000/rule', {
+        headers: {
+            'Authorization': localStorage.getItem('token')
+        },
+    })
+    .then(response => {
+        if (response.ok) {
+            return response;
+        }
+        else {
+            var error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+        }
+    },
+    error => {
+        var errmess = new Error(error.message);
+        throw errmess;
+    })
+    .then(response => {
+      setrules(response.data)
+    })
+    .catch(error => (console.log(error.message)));
 
-
+            })
 
 
 
@@ -67,9 +92,9 @@ const callback = (count) => {
          console.log(open)
    
        }
-       const [expanded, setExpanded] = React.useState(false);
+const [expanded, setExpanded] = React.useState(false);
 
-       const handleChange = (panel) => (event, isExpanded) => {
+const handleChange = (panel) => (event, isExpanded) => {
          setExpanded(isExpanded ? panel : false);
        };
      
@@ -80,7 +105,7 @@ const callback = (count) => {
       <NavBar  name='Rules' 
       parentCallback={callback} description="is an online platform allowing you to test and advance your skills in cyber security. Use it responsibly and don't hack your fellow members..." /> 
       
- {props.rules.map( list => (
+ {rules.map( list => (
 
        <div  className={clsx(classes.content, {
         [classes.contentShift]: open
@@ -96,11 +121,11 @@ const callback = (count) => {
           id="panel1bh-header"
         >
           <Typography className={classes.heading}> <div className='rulesCounting'> 1</div></Typography>
-          <Typography className={classes.secondaryHeading}>{list.title}</Typography>
+          <Typography className={classes.secondaryHeading}>{list.Title}</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
           <Typography>
-            {list.description}
+            {list.Description}
           </Typography>
         </ExpansionPanelDetails>
       </ExpansionPanel>

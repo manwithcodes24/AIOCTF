@@ -148,10 +148,45 @@ function SignupPage() {
   const GoToLogin= () => {
    setStatus('200')
   }
-
+const user ={
+  Email:email,
+  Name:name,
+  University:university, 
+  Password: password
+}
   const handleSubmit = event => {
-    {console.log(name, email , password, university)
-       this.props.signupUser({Email:email,Name:name,University:university, Password: password});
+    {console.log(name, email , university)
+       
+fetch('http://localhost:8000/user/UserRegister', {
+        method: 'POST',
+        headers: { 
+            'Content-Type':'application/json' 
+        },
+        body: JSON.stringify(user)
+    .then(response => {
+        if (response.ok) {
+            return response;
+        }
+        else {
+            var error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+        }
+    },
+    error => {
+        var errmess = new Error(error.message);
+        throw errmess;
+    })
+    .then(response => {
+      window.location.href="/login"
+    })
+    .catch(error => (console.log(error.message)))
+
+            })
+
+
+
+
 
     }
     event.preventDefault();
