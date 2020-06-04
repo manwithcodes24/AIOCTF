@@ -1,40 +1,23 @@
-import React,{useState} from "react";
+import React, { useState, useEffect } from "react";
 import '../assets/css/style.css';
 import { TransitionGroup } from 'react-transition-group';
-import Particles from 'react-particles-js'; 
-import NavBar from '../component/NavBar'
-import M from 'materialize-css'
+import Particles from 'react-particles-js';
+import NavBar from '../component/NavBar';
+import axios from "axios";
 // reactstrap components
 import { BrowserRouter, Route, Switch, Redirect, Link, useHistory } from "react-router-dom";
 import particleComponent from '../component/particle.js';
+
 function LoginPage() {
-    const history = useHistory()
-    const [username, setusername] = useState("")
-    const [Password, setPassword] = useState("")
-    const PostData = ()=>{
-      console.log("hello",username)
-            fetch("/signin",{
-                method: "post",
-                headers:{
-                    "Content-Type":"application/json"
-                },
-                body:JSON.stringify({
-                    username,
-                    Password,
-                })
-            }).then(res=>res.json()).then(data=>{
-                if(data.error){
-                     return M.toast({html: data.error,classes:'red'})
-                }
-                else{
-                    localStorage.setItem('jwt',data.token)
-                    localStorage.setItem('user',JSON.stringify(data.payload))
-                    M.toast({html: data.success,classes: 'green'})
-                    return history.push('/profile')
-                }
-            })
-        }
+
+
+  const [password, setPassword] = React.useState('');
+  const [email, setEmail] = React.useState('');
+  const [status, setStatus] = React.useState(0)
+
+
   const particlesOptions = {
+
     "particles": {
       "number": {
         "value": 60,
@@ -158,65 +141,125 @@ function LoginPage() {
       document.body.classList.remove("sidebar-collapse");
     };
   });
+
+
+  const handleSubmit = event => {
+    {
+      const user = {
+        username: email,
+        Password: password,
+      }
+
+      fetch('http://localhost:8000/user/UserLogin', {
+        method: 'get',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: email,
+          Password: password
+        })
+      })
+        .then(response => {
+          if (response.ok) {
+            return response;
+          } else {
+            var error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+          }
+        },
+          error => {
+            throw error;
+          })
+        .then(response => response.json())
+        .then(response => {
+          if (response.success) {
+
+
+            localStorage.setItem('token', response.token);
+            localStorage.setItem('creds', JSON.stringify(user));
+
+          }
+          else {
+            var error = new Error('Error ' + response.status);
+            error.response = response;
+            throw error;
+          }
+        })
+        .catch(error => (console.log("logging error", error)))
+
+
+
+    }
+    event.preventDefault();
+  }
   return (
     <div>
-  <title>Login</title>
-  <link rel="stylesheet" type="text/css" href="style.css" />
-  <div>
-  <Particles
-  className="particles"
-  params={particlesOptions} />
-    <div className="container" id="container">
-      <div className="form-container sign-up-container" >
-        <form action>
-          <h1>Create Account</h1>
-          <div className="social-container">
-            <a href="#" className="social"><i className="fa fa-facebook" /></a>
-            <a href="#" className="social"><i className="fa fa-google" /></a>
-            <a href="#" className="social"><i className="fa fa-linkedin" /></a>
+      <title>Login</title>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+      <div>
+        <Particles
+          className="particles"
+          params={particlesOptions} />
+        <div className="container" id="container">
+          <div className="form-container sign-up-container" >
+            <form action>
+              <h1>Create Account</h1>
+
+              <span>Use your email for registration</span><br />
+              <input type="text" name="name" placeholder="Name"
+              />
+              <input type="email" name="email" placeholder="Email" />
+              <input type="password" name="password" placeholder="Password" />
+              <Link to='/signup'> <button>Sign Up</button></Link>
+            </form>
           </div>
-          <span>or use your email for registration</span>
-          <input type="text" name="name" placeholder="Name" />
-          <input type="email" name="email" placeholder="Email" />
-          <input type="password" name="password" placeholder="Password" />
-          <Link to='/signup'> <button>Sign Up</button></Link>
-        </form>
-      </div>
-      <div className="form-container sign-in-container">
-        <form>
-          <h1>Sign In</h1>
-          <div className="social-container">
-            <a href="#" className="social"><i className="fa fa-facebook" /></a>
-            <a href="#" className="social"><i className="fa fa-google" /></a>
-            <a href="#" className="social"><i className="fa fa-linkedin" /></a>
+          <div className="form-container sign-in-container">
+            <form onSubmit={handleSubmit}>
+              <h1>Sign In</h1>
+
+              <span> use your account</span><br />
+              <input type="email" name="email" placeholder="Email"
+                onChange={(event) => { setEmail(event.target.value) }} />
+              <input type="password" name="password" placeholder="Password"
+                onChange={(event) => { setPassword(event.target.value) }} />
+              <a href="#">Forgot Your Password</a>
+              <button type="button" onClick={() => handleSubmit()} >Sign In</button>
+            </form>
           </div>
-          <span>or use your account</span>
-          <input type="email" name="email" onChange={(e)=>setusername(e.target.value)}  placeholder="Email" />
-          <input type="password" name="password" onChange={(e)=>setPassword(e.target.value)} placeholder="Password" />
-          <a href="#">Forgot Your Password</a>
-          <button type="button" onClick={()=>PostData()} >Sign In</button>
-        </form>
-      </div>
-      <div className="overlay-container">
-        <div className="overlay">
-          <div className="overlay-panel overlay-left">
-            <h1>Welcome Back!</h1>
-            <p>To keep connected with us please login with your personal info</p>
-            <button className="ghost" id="signIn">Sign In</button>
-          </div>
-          <div className="overlay-panel overlay-right">
-            <h1>Hello, Friend!</h1>
-            <p>Enter your details and start journey with us</p>
-            <Link to='/signup'><button className="ghost" id="signUp">Sign Up</button></Link>
+          <div className="overlay-container">
+            <div className="overlay">
+              <div className="overlay-panel overlay-left">
+                <h1>Welcome Back!</h1>
+                <p>To keep connected with us please login with your personal info</p>
+                <button className="ghost" id="signIn">Sign In</button>
+              </div>
+              <div className="overlay-panel overlay-right">
+                <h1>Hello, Friend!</h1>
+                <p>Enter your details and start journey with us</p>
+                <Link to='/signup'><button className="ghost" id="signUp">Sign Up</button></Link>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
 
-   
+
   );
 }
 
 export default LoginPage;
+
+
+
+
+
+
+
+
+
+
+
+

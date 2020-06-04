@@ -148,31 +148,52 @@ function SignupPage() {
   const GoToLogin= () => {
    setStatus('200')
   }
+const user ={
+  Email:email,
+  Name:name,
+  University:university, 
+  Password: password
+}
   const handleSubmit = event => {
-    {console.log(name, email , password, university)}
+    {console.log(name, email , university)
+       
+fetch('http://localhost:8000/user/UserRegister', {
+        method: 'POST',
+        headers: { 
+            'Content-Type':'application/json' 
+        },
+        body: JSON.stringify(user)
+    .then(response => {
+        if (response.ok) {
+            return response;
+        }
+        else {
+            var error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+        }
+    },
+    error => {
+        var errmess = new Error(error.message);
+        throw errmess;
+    })
+    .then(response => {
+      window.location.href="/login"
+    })
+    .catch(error => (console.log(error.message)))
+
+            })
+
+
+
+
+
+    }
     event.preventDefault();
 
-    const user = {
-      "username": name,
-      "Email" : email, 
-      
-      "University" : university,
-      "Password" : password ,
-    };
-    axios.post(`http://localhost:8000/user/UserRegister`, user )
-      .then(res => {
-        console.log(res)
-       const data = res.data
-       if(res.status===200){
-        setStatus(res.data)
-        console.log(status)
-       }
-       
-       
-      }).catch(e => {
-       
-      }  
-      )
+    
+    
+    
   }
   
   return (
@@ -189,17 +210,17 @@ function SignupPage() {
       <div className="form-container sign-in-container" >
         <form onSubmit={handleSubmit}>
           <h1>Create Account</h1>
-          <div className="social-container">
-            <a href="#" className="social"><i className="fa fa-facebook" /></a>
-            <a href="#" className="social"><i className="fa fa-google" /></a>
-            <a href="#" className="social"><i className="fa fa-linkedin" /></a>
-          </div>
-          <span>or use your email for registration</span>
-          <input type="text" name="name" placeholder="Name" onChange={(event) => {setName(event.target.value)}} /> 
-          <input type="email" name="email" placeholder="Email" onChange={(event) => {setEmail(event.target.value)}}/>
-          <input type="text" name="university" placeholder="University" onChange={(event) => {setUniversity(event.target.value)}} />
+          
+          <span>Use your email for registration</span><br/>
+          <input type="text" name="name" placeholder="Name" 
+          onChange={(event) => {setName(event.target.value)}} /> 
+          <input type="email" name="email" placeholder="Email" 
+          onChange={(event) => {setEmail(event.target.value)}}/>
+          <input type="text" name="university" placeholder="University" 
+          onChange={(event) => {setUniversity(event.target.value)}} />
 
-          <input type="password" name="password" placeholder="Password" onChange={(event) => {setPassword(event.target.value)}}/>
+          <input type="password" name="password" placeholder="Password"
+           onChange={(event) => {setPassword(event.target.value)}}/>
           
           <button type="submit">Sign Up</button>
         </form>
@@ -207,12 +228,8 @@ function SignupPage() {
       <div className="form-container sign-up-container">
         <form action="#">
           <h1>Sign In</h1>
-          <div className="social-container">
-            <a href="#" className="social"><i className="fa fa-facebook" /></a>
-            <a href="#" className="social"><i className="fa fa-google" /></a>
-            <a href="#" className="social"><i className="fa fa-linkedin" /></a>
-          </div>
-          <span>or use your account</span>
+          
+          <span> Use your account</span><br/>
           <input type="email" name="email" placeholder="Email" />
           <input type="password" name="password" placeholder="Password" />
           <a href="#">Forgot Your Password</a>
@@ -230,7 +247,9 @@ function SignupPage() {
             <h1>Hello, Friend!</h1>
             <p>Enter your details and start journey with us</p>
             <button> className="ghost" id="signUp">Sign Up</button>
-            {status=='200' ? ( <Alert severity="success">This is a success alert — check it out!</Alert> ) : (<div> </div> )}
+            {status=='200' ?
+             ( <Alert severity="success">
+              This is a success alert — check it out!</Alert> ) : (<div> </div> )}
           </div>
         </div>
       </div>
