@@ -2,6 +2,7 @@
     "name": "aioctf",
     "version": "0.1.0",
     "private": true,
+    "proxy": "http://localhost:8000",
     "dependencies": {
         "@devexpress/dx-chart-core": "^2.6.3",
         "@devexpress/dx-react-chart": "^2.6.3",

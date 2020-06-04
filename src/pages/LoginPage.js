@@ -150,16 +150,14 @@ function LoginPage() {
         Password: password,
       }
 
-      fetch('http://localhost:8000/user/UserLogin', {
-        method: 'get',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          username: email,
-          Password: password
-        })
-      })
+      // fetch('http://localhost:8000/user/UserLogin', {
+      //   method: 'post',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify(user)
+      // })
+      axios.post('http://localhost:8000/user/UserLogin',user)
         .then(response => {
           if (response.ok) {
             return response;
@@ -185,15 +183,11 @@ function LoginPage() {
             var error = new Error('Error ' + response.status);
             error.response = response;
             throw error;
-          }
-        })
-        .catch(error => (console.log("logging error", error)))
-
-
-
-    }
-    event.preventDefault();
+        }
+    })
+    .catch(error => (console.log("logging errro",error)))
   }
+}
   return (
     <div>
       <title>Login</title>
@@ -249,6 +243,7 @@ function LoginPage() {
 
   );
 }
+
 
 export default LoginPage;
 
