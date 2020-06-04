@@ -186,17 +186,9 @@ function LoginPage() {
         }
     })
     .catch(error => (console.log("logging errro",error)))
-
-
-      
-    }
-    event.preventDefault();
-
-    
-    
-    
       
   }
+}
   return (
     
       
@@ -255,6 +247,7 @@ function LoginPage() {
 
   );
 }
+
 
 export default LoginPage;
 
