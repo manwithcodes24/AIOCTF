@@ -58,10 +58,10 @@ function Universities( ) {
 const classes = useStyles();
 const [open, setOpen] = React.useState(false);
 const [status,setStatus] = React.useState(0);
-const [universities,setuniversities]= React.useState({})
+const [universities,setuniversities]= React.useState([{}])
      
  useEffect(()=>{
-      fetch('http://localhost:8000/academics/uni', {
+      fetch('http://localhost:8000/academics/Uni', {
         headers: {
             'Authorization': localStorage.getItem('token')
         },
@@ -81,7 +81,7 @@ const [universities,setuniversities]= React.useState({})
         throw errmess;
     })
     .then(response => {
-      setuniversities(response.data)
+      setuniversities(response.data.map(list=>universities))
     })
     .catch(error => (console.log(error.message)));
 
@@ -111,20 +111,20 @@ const [universities,setuniversities]= React.useState({})
         </Typography>
         <div className={classes.demo}>
           <List >
-            {universities.map( list => (
+            {universities.map( (list,key) => (
 <ListItem  key={list.id} className={classes.universitiesListItem} >
                 <ListItemText
                  
-                >Name : {list.Name}</ListItemText>
+                >Name : {list.Name}</ListItemText><br/>
               
                 <ListItemText>
                  
-                Location : {list.location}</ListItemText>
+                Location : {list.Location}</ListItemText><br/>
                 <ListItemText>
                  
-                World Ranking : {list.Worldranking} </ListItemText>
+                World Ranking : {list.World_Ranking} </ListItemText><br/>
                 <ListItemText>
-                Status : {list.status}</ListItemText>
+                Status : {list.status}</ListItemText><br/>
                 
               </ListItem>
 

@@ -8,12 +8,7 @@ import axios from "axios";
 import { BrowserRouter, Route, Switch, Redirect, Link } from "react-router-dom";
 import particleComponent from '../component/particle.js';
 
-function LoginPage() {
-  
 
-  const [password, setPassword] = React.useState('');
-  const [email, setEmail] = React.useState('') ;
-  const [status , setStatus] = React.useState(0)
 
 
   const particlesOptions = {
@@ -128,6 +123,13 @@ function LoginPage() {
     "retina_detect": true
   };
 
+
+function LoginPage() {
+  
+
+  const [password, setPassword] = React.useState('');
+  const [email, setEmail] = React.useState('') ;
+  const [status , setStatus] = React.useState(0)
   const [firstFocus, setFirstFocus] = React.useState(false);
   const [lastFocus, setLastFocus] = React.useState(false);
   React.useEffect(() => {
@@ -145,11 +147,12 @@ function LoginPage() {
 
   const handleSubmit = event => {
     {
+      console.log("loging in")
       const user ={
         Email:email, 
         Password: password
-
-      }
+        }
+  console.log(user)
 
   fetch('http://localhost:8000/user/UserLogin', {
         method: 'POST',
@@ -158,25 +161,16 @@ function LoginPage() {
         },
         body: JSON.stringify(user)
     })
-    .then(response => {
-        if (response.ok) {
-            return response;
-        } else {
-            var error = new Error('Error ' + response.status + ': ' + response.statusText);
-            error.response = response;
-            throw error;
-        }
-        },
-        error => {
-            throw error;
-        })
+    
     .then(response => response.json())
     .then(response => {
         if (response.success) {
             
 
-            localStorage.setItem('token', response.token);
+            localStorage.setItem('token', response.access.access);
+            localStorage.setItem('refreshTokn',response.access.refresh)
             localStorage.setItem('creds', JSON.stringify(user));
+            window.href.location="http://localhost:8000/dashboard"
            
         }
         else {
@@ -185,9 +179,10 @@ function LoginPage() {
             throw error;
         }
     })
-    .catch(error => (console.log("logging errro",error)))
+    .catch(error => (console.log("logging error",error)))
       
   }
+  event.preventDefault();
 }
   return (
     
@@ -236,7 +231,7 @@ function LoginPage() {
           <div className="overlay-panel overlay-right">
             <h1>Hello, Friend!</h1>
             <p>Enter your details and start journey with us</p>
-            <Link to='/signup'><button className="ghost" id="signUp">Sign Up</button></Link>
+            <Link to='/sign'><button className="ghost" id="signUp">Sign Up</button></Link>
           </div>
         </div>
       </div>

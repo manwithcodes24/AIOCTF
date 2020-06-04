@@ -1,13 +1,12 @@
-import React ,{useState, useEffect}from "react";
-
+import React,{useState,useEffect} from 'react';
 import clsx from 'clsx';
-import NavBar from '../component/NavBar'
+import NavBar from '../component/NavBar';
+//import clsx from 'clsx';
+//import NavBar from '../component/NavBar'
 //import React from 'react';
 import '../assets/css/style.css'
 import { makeStyles } from '@material-ui/core/styles';
 import {Grid, Typography, List, ListItem, ListItemText} from '@material-ui/core'
-
-
 
 
 const drawerWidth = 240;
@@ -54,27 +53,23 @@ const useStyles = makeStyles((theme) => ({
           backgroundColor:'#3b4046',
           marginBottom:'2%' ,
       },
-}));
+}))
+
+
+function Profile() 
 
 
 
 
-function Announcement(){
-console.log("announcement")
-	const classes =useStyles();
-    const [open, setOpen] = useState(false);
-    const [announcement,setannouncement] =useState([{}])
-    //const [status,setStatus] = React.useState(0);
-   // const [Allchallenges,setChallenges]= React.useState([])
-     const callback = (count) => {
-          setOpen(count)
-          console.log(open)
 
-    
-        }
+{
+const classes = useStyles();
+    const [open, setOpen] = React.useState(false);
 
+	const  [profile,setprofile] = React.useState([{}])
+  
 useEffect(()=>{
-      fetch('http://localhost:8000/announcement', {
+      fetch('http://localhost:8000/user/Profile', {
         headers: {
             'Authorization': localStorage.getItem('token')
         },
@@ -94,17 +89,16 @@ useEffect(()=>{
         throw errmess;
     })
     .then(response => {
-      setannouncement(response.data.map(list=>announcement))
+      setprofile(response.data.map(list=>Profile))
     })
     .catch(error => (console.log(error.message)));
 
             })
-
-
     return(
+       
        <div>
        <div>
-       <NavBar  name='Universities'  parentCallback={callback} description="is an online platform allowing you to test and advance your skills in cyber security. Use it responsibly and don't hack your fellow members..." /> 
+       <NavBar  name='support'  description="is an online platform allowing you to test and advance your skills in cyber security. Use it responsibly and don't hack your fellow members..." /> 
        </div> 
        <div  className={clsx(classes.content, {
         [classes.contentShift]: open
@@ -112,19 +106,28 @@ useEffect(()=>{
       <Grid container spacing={5} >
       <Grid item xs={22} md={10}>
         <Typography variant="h6" className={classes.title}>
-        Here are all the latest Announcements :
+          My Profile 
         </Typography>
         <div className={classes.demo}>
           <List >
-            {announcement.map( (key,list) => (
+            {profile.map( (key,list) => (
 <ListItem  key={list.id} className={classes.announcementListItem} >
                 <ListItemText
                  
-                > {list.Title}</ListItemText>
+                > Name :{list.username}</ListItemText>
               
                 <ListItemText
                  
-                > {list.Description}</ListItemText>
+                > {list.Email}</ListItemText>
+                 <ListItemText
+                 
+                > Badges :{list.Badges}</ListItemText>
+                 <ListItemText
+                 
+                >Points : {list.points}</ListItemText>
+                 <ListItemText
+                 
+                >University : {list.University}</ListItemText>
                 
               </ListItem>
 
@@ -141,8 +144,7 @@ useEffect(()=>{
 
 
 
-       
-    );
+    )
 }
 
 
@@ -151,7 +153,6 @@ useEffect(()=>{
 
 
 
-export default Announcement;
 
 
 
@@ -159,3 +160,4 @@ export default Announcement;
 
 
 
+export default Profile;

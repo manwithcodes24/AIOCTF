@@ -53,10 +53,11 @@ const useStyles = makeStyles((theme) => ({
       },
 }))
 
-export default function Rules( ) {
+export default function Rules() {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
-    const [rules,setrules] =React.useState({});
+    const [rules,setrules] =React.useState([{}]);
+
 
  useEffect(()=>{
       fetch('http://localhost:8000/rule', {
@@ -79,7 +80,8 @@ export default function Rules( ) {
         throw errmess;
     })
     .then(response => {
-      setrules(response.data)
+      //fetching rule doc error
+     //setrules(response.data.map(list=>rule))
     })
     .catch(error => (console.log(error.message)));
 
@@ -105,7 +107,7 @@ const handleChange = (panel) => (event, isExpanded) => {
       <NavBar  name='Rules' 
       parentCallback={callback} description="is an online platform allowing you to test and advance your skills in cyber security. Use it responsibly and don't hack your fellow members..." /> 
       
- {rules.map( list => (
+ {rules.map( (key,list) => (
 
        <div  className={clsx(classes.content, {
         [classes.contentShift]: open

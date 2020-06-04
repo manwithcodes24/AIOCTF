@@ -66,10 +66,10 @@ function Support( )
 const classes = useStyles();
     const [open, setOpen] = React.useState(false);
 
-	const  [support,setsupport] = React.useState({})
+	const  [support,setsupport] = React.useState([{}])
   
 useEffect(()=>{
-      fetch('http://localhost:8000/support', {
+      fetch('http://localhost:8000/Support', {
         headers: {
             'Authorization': localStorage.getItem('token')
         },
@@ -89,7 +89,7 @@ useEffect(()=>{
         throw errmess;
     })
     .then(response => {
-      setsupport(response.data)
+      setsupport(response.data.map(list=>Support))
     })
     .catch(error => (console.log(error.message)));
 
@@ -106,11 +106,11 @@ useEffect(()=>{
       <Grid container spacing={5} >
       <Grid item xs={22} md={10}>
         <Typography variant="h6" className={classes.title}>
-          Challenges
+          Suppporting Partner
         </Typography>
         <div className={classes.demo}>
           <List >
-            {support.map( list => (
+            {support.map( (key,list) => (
 <ListItem  key={list.id} className={classes.announcementListItem} >
                 <ListItemText
                  

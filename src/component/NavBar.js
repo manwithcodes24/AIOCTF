@@ -303,7 +303,7 @@ Swag Store
             <ListItemIcon>
               
             </ListItemIcon>
-           <Link to='/Dashboard' > Dashboard </Link>
+           <Link to='/dashboard' > Dashboard </Link>
             
           </ListItem>  
           <ListItem button className={clsx(classes.nested, classes.expansionButtonCommon)} onClick={handleOther}>
@@ -328,7 +328,7 @@ Swag Store
         <ListItem button  > 
         <ListItemIcon>   
         </ListItemIcon>
-        <Link to='/changeLog'>Change Log</Link>
+        
         </ListItem>
 
 
@@ -337,7 +337,7 @@ Swag Store
         <ListItem button  > 
         <ListItemIcon>   
         </ListItemIcon>
-        <Link to='/badges'>Badges</Link>
+       
         </ListItem>
 
 
@@ -346,7 +346,7 @@ Swag Store
         <ListItem button  > 
         <ListItemIcon>   
         </ListItemIcon>
-        <Link to='/features'>Feature Request</Link>
+        <Link to='/featureReq'>Feature Request</Link>
         </ListItem>
 
 
@@ -355,7 +355,7 @@ Swag Store
         <ListItem button  > 
         <ListItemIcon>   
         </ListItemIcon>
-        <Link to='/announcment'>Announcment</Link>
+        <Link to='/announcement'>Announcment</Link>
         </ListItem>
 
         <ListItem button  > 
@@ -371,65 +371,6 @@ Swag Store
         </Collapse>
         </List>
       </Collapse>
-
-
-
-
-
-
-      <ListItem button onClick={handleRanking}>
-        <ListItemIcon>
-          <InboxIcon />
-        </ListItemIcon>
-        <ListItemText className={clsx(classes.nested, classes.expansionHeaderCommon)}>Ranking</ListItemText>
-        {openRanking ? <ExpandLess /> : <ExpandMore />}
-        </ListItem>
-      <Collapse in={openRanking} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <ListItem button  >
-            <ListItemIcon>
-             
-            </ListItemIcon>
-            <Link to='/HOF'>hall of fame</Link>
-          </ListItem>
-
-          <ListItem button  >
-            <ListItemIcon>
-             
-            </ListItemIcon>
-            <Link to='/team'>team</Link>
-          </ListItem>
-          
-
-          <ListItem button  >
-            <ListItemIcon>
-             
-            </ListItemIcon>
-            <Link to='/university'>university</Link>
-          </ListItem>
-
-
-          <ListItem button  >
-          <ListItemIcon>
-           
-          </ListItemIcon>
-          <Link to='/country'>country</Link>
-        </ListItem>
-
-        <ListItem button  >
-          <ListItemIcon>
-           
-          </ListItemIcon>
-          <Link to='/VIP'>VIP</Link>
-        </ListItem>
-
-
-          
-        </List>
-      </Collapse>
-
-
-
 
 
       <ListItem button onClick={handleEducation}>
@@ -464,7 +405,7 @@ Swag Store
             <ListItemIcon>
               
             </ListItemIcon>
-            <Link to='/startingPoint'>Starting Point</Link>
+            
           </ListItem>
           
 
@@ -472,7 +413,7 @@ Swag Store
             <ListItemIcon>
               
             </ListItemIcon>
-            <Link to='/access'>Access</Link>
+            
           </ListItem>
 
           <ListItem button  >

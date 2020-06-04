@@ -10,12 +10,7 @@ import { BrowserRouter, Route, Switch, Redirect, Link } from "react-router-dom";
 import particleComponent from '../component/particle.js';
 
 
-export default function FeatureRequest() {
 
- const [title, setTitle] = React.useState('');
- const [description, setDescription] = React.useState('') ;
-
- const [req, setReq] = React.useState({}) ;
   const particlesOptions = {
 
     "particles": {
@@ -175,7 +170,12 @@ const useStyles = makeStyles((theme) => ({
       },
 }))
 
+export default function FeatureRequest() {
 
+ const [title, setTitle] = React.useState('');
+ const [description, setDescription] = React.useState('') ;
+
+ const [req, setreq] = React.useState([{}]) ;
    const classes =useStyles();
   const [firstFocus, setFirstFocus] = React.useState(false);
   const [lastFocus, setLastFocus] = React.useState(false);
@@ -213,7 +213,8 @@ useEffect(()=>{
         throw errmess;
     })
     .then(response => {
-      setReq(response.data)
+      //error in fetching
+     // setreq(response.data.map(list=>requests))
     })
     .catch(error => (console.log(error.message)));
 
@@ -275,26 +276,14 @@ return(
        <NavBar  name='Feature Request' description="is an online platform allowing you to test and advance your skills in cyber security. Use it responsibly and don't hack your fellow members..." /> 
        
 <div>
-  <title>Make a Request</title>
+  
   <div>
   
   <div className="particles" params={particlesOptions} />
-    <div className="container" id="container">
-      <div className="form-container sign-up-container" >
-        <form action>
-          <h1>Create Account</h1>
-          
-          <span>Use your email for registration</span><br/>
-          <input type="text" name="name" placeholder="Name"
-           />
-          <input type="email" name="email" placeholder="Email" />
-          <input type="password" name="password" placeholder="Password" />
-          <Link to='/signup'> <button>Sign Up</button></Link>
-        </form>
-      </div>
-      <div className="form-container sign-in-container">
+    
+      <title>Make a Request</title>
         <form  onSubmit={handleSubmit}>
-          <h1>Sign In</h1>
+          
           
           <label for="title">Title</label>
           <input type="text" name="title" placeholder="title" 
@@ -304,21 +293,16 @@ return(
            onChange={(event) => {setDescription(event.target.value)}} />
           <button>Make Request</button>
         </form>
-      </div>
-      
-    </div>
+     
   </div>
 </div>
 <div  className={clsx(classes.content,
         classes.root)}>
       <Grid container spacing={5} >
       <Grid item xs={22} md={10}>
-        <Typography variant="h6" className={classes.title}>
-          Challenges
-        </Typography>
         <div className={classes.demo}>
           <List >
-            {req.map( list => (
+            {req.map( (key,list) => (
 <ListItem  key={list.id} className={classes.announcementListItem} >
 { list.userid=== localStorage.getItem('token') ? 
 (

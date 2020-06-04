@@ -15,6 +15,7 @@ import { stat } from "fs";
 
 
 function SignupPage() {
+
   const [name, setName] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [email, setEmail] = React.useState('') ;
@@ -145,17 +146,17 @@ function SignupPage() {
   //   };
   // });
 
-  const GoToLogin= () => {
-   setStatus('200')
-  }
+  
 const user ={
   Email:email,
-  Name:name,
+  username:name,
   University:university, 
   Password: password
 }
   const handleSubmit = event => {
-    {console.log(name, email , university)
+    {
+      console.log("sign")
+     
        
 fetch('http://localhost:8000/user/UserRegister', {
         method: 'POST',
@@ -164,8 +165,8 @@ fetch('http://localhost:8000/user/UserRegister', {
         },
         body: JSON.stringify(user)
     .then(response => {
-        if (response.ok) {
-            return response;
+        if (response.success==="user has been successfully register") {
+          window.location.href="http://localhost:8000/login"
         }
         else {
             var error = new Error('Error ' + response.status + ': ' + response.statusText);
@@ -177,9 +178,6 @@ fetch('http://localhost:8000/user/UserRegister', {
         var errmess = new Error(error.message);
         throw errmess;
     })
-    .then(response => {
-      window.location.href="/login"
-    })
     .catch(error => (console.log(error.message)))
 
             })
@@ -189,9 +187,9 @@ fetch('http://localhost:8000/user/UserRegister', {
 
 
     }
-    event.preventDefault();
+   
 
-    
+    event.preventDefault();
     
     
   }

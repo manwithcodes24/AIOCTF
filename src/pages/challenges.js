@@ -61,7 +61,7 @@ export default function Challenges( ) {
     const [open, setOpen] = React.useState(false);
      const [key, setKey] = React.useState('');
      const [challenge_Id, setchallenege_id] = React.useState('');
-    const [challenges,setchallenges]= React.useState({})
+    const [challenges,setchallenges]= React.useState([{}])
      const callback = (count) => {
           setOpen(count)
           console.log(open)
@@ -69,7 +69,7 @@ export default function Challenges( ) {
     
         }
         useEffect(()=>{
-      fetch('http://localhost:8000/challenges', {
+      fetch('http://localhost:8000/Challenge', {
         headers: {
             'Authorization': localStorage.getItem('token')
         },
@@ -89,7 +89,7 @@ export default function Challenges( ) {
         throw errmess;
     })
     .then(response => {
-      setchallenges(response.data)
+      setchallenges(response.data.map(list=>challenges))
     })
     .catch(error => (console.log(error.message)));
 
@@ -101,7 +101,7 @@ const handleSubmit = event => {
   //setchallenege_id(challengeId.value)
     {
       const data ={
-        challengeKey : key,
+        Key : key,
       };
       
        fetch('http://localhost:8000/academics/checkResult?id={challengeId.value}',{
@@ -111,9 +111,13 @@ const handleSubmit = event => {
         },
         body :JSON.stringify(data)
 
-       }).then(response => response.json())
-       .then(data =>{console.log("Success")})
-       .catch((error)=>{console.log("error in sending key",error)})
+       }).then(response => response.json(),
+      )
+       .then(data =>{console.log("Success")
+         window.alert("Key Submited Successfully")
+     })
+       .catch((error)=>{console.log("error in sending key",error)
+        window.alert("Key not Submited,Try later")})
 
     }
     event.preventDefault();
@@ -141,23 +145,27 @@ const handleSubmit = event => {
           Challenges
         </Typography>
         <div className={classes.demo}>
+          
+
           <List >
-               {challenges.map( list => (
+         {challenges.map( list => (      
 <ListItem  key={list.id} className={classes.challengesListItem} >
                 <ListItemText
                  
-                > {list.Category}</ListItemText>
+                >Category : {list.Category}</ListItemText>
               
                 <ListItemText
                  
-                > {list.Title}</ListItemText>
+                >Title : {list.Title}</ListItemText>
                 <ListItemText
                  
-                > {list.TimeLimitation}</ListItemText>
+                >Time Limitation{list.TimeLimitation}</ListItemText>
                 <ListItemText
                  
-                > {list.Answer}</ListItemText>
-                <ListItem>
+                > Answer :{list.Answer}</ListItemText>
+
+                
+                <ListItemText>
 
                  <form 
                   onSubmit={handleSubmit} >
@@ -167,12 +175,12 @@ const handleSubmit = event => {
               <input type="hidden" name="challengeId"
               value={list.id}
                />
-              }
+              
           
           <button type="submit">Submit key</button>
           
                 </form>
-                </ListItem>
+                </ListItemText>
                 
               </ListItem>
 

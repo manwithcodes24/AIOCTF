@@ -10,6 +10,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import {  Link } from "react-router-dom";
 //import Paper from '@material-ui/core/Paper';
 import clsx from 'clsx';
 import {
@@ -160,23 +161,7 @@ const generateData = (start, end, step ,gap) => {
 };
 
 
-export  function SimpleModal() {
 
-  const [onOpen, setonOpen] = React.useState(false);
-  const classes = useStyles();
-  // getModalStyle is not a pure function, we roll the style only on the first render
-  const [modalStyle] = React.useState(getModalStyle);
- 
-  const handleOpen = () => {
-
-    setonOpen(true);
-  };
-
-  const handleClose = () => {
-    setonOpen(false);
-  };
-
-}
 export default function Dashboard( ) {
   const classes = useStyles();
   const [total,settotal] = React.useState({});
@@ -191,14 +176,6 @@ export default function Dashboard( ) {
   const [points, setPoints] = React.useState(0);
   const [open, setOpen] = React.useState(false);
 
-  const handleOpen = () => {
-
-    setonOpen(true);
-  };
-
-  const handleClose = () => {
-    setonOpen(false);
-  };
   const callback = (count) => {
       setOpen(count)
       console.log(open)
@@ -263,7 +240,7 @@ const body = (
       <h3>{points}</h3>
         
       </p>
-      <SimpleModal />
+     
     </div>
   );
 
@@ -277,19 +254,10 @@ const body = (
       description="is an online platform allowing you to 
       test and advance your skills in cyber security. 
       Use it responsibly and don't hack your fellow members..." /> 
-      <div>
-      <button type="button" onClick={handleOpen}>
-        MyProfile
-      </button>
-      <Modal
-        onOpen={onOpen}
-        onClose={handleClose}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-      >
-        {body}
-      </Modal>
-    </div>
+      
+      <Link to='/profile'><button className="ghost" id="signIn">My Profile</button></Link>
+      
+    
       
  <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
