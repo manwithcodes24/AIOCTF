@@ -12,11 +12,8 @@ const contentWidth = 200 ;
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
-        
       },
     content: {
-   
-    
         height:'auto',
          flexGrow: 1,
          padding: theme.spacing(1),
@@ -25,14 +22,12 @@ const useStyles = makeStyles((theme) => ({
            duration: theme.transitions.duration.leavingScreen,
          }),
          marginTop:'0',
-         
        },
       contentShift: {
         transition: theme.transitions.create('margin', {
           easing: theme.transitions.easing.easeOut,
           duration: theme.transitions.duration.enteringScreen,
         }),
-        
         marginLeft: drawerWidth ,
       },
       gridListItem:{
@@ -71,13 +66,12 @@ export default function Challenges() {
      const callback = (count) => {
           setOpen(count)
           console.log(open)
-    
         }
     return(
         <div>
        <div>
        <NavBar  name='Challenges' parentCallback={callback} description="is an online platform allowing you to test and advance your skills in cyber security. Use it responsibly and don't hack your fellow members..." /> 
-       </div> 
+       </div>
        <div  className={clsx(classes.content, {
         [classes.contentShift]: open
       }, classes.root)}>
@@ -90,9 +84,7 @@ export default function Challenges() {
           <List >
             {generate(
               <ListItem className={classes.challengesListItem} >
-                <ListItemText
-                 
-                >Challenge  </ListItemText>
+                <ListItemText>Challenge  </ListItemText>
               </ListItem>,
             )}
           </List>

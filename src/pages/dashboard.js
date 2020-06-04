@@ -6,7 +6,6 @@ import {Grid, Paper,Typography, ButtonBase } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import {
-  ArgumentAxis,
   ValueAxis,
   Chart,
   LineSeries,
@@ -47,35 +46,26 @@ const data = [
 
 
 const drawerWidth = 240;
-const contentWidth = 200 ; 
+const contentWidth = 200 ;
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-<<<<<<< HEAD
-=======
-    
->>>>>>> bef847a8800102d0df1016364a83975b69b281ad
   },
   paper: {
     padding: theme.spacing(2),
     backgroundColor:'#292e33' ,
-    color: '#c7c8ca' , 
+    color: '#c7c8ca' ,
     width:260
   },
-<<<<<<< HEAD
-=======
   paperGroup2: {
     padding: theme.spacing(2),
     backgroundColor:'#292e33' ,
-    color: '#c7c8ca' , 
-    
+    color: '#c7c8ca' ,
   },
->>>>>>> bef847a8800102d0df1016364a83975b69b281ad
   image: {
     width: 100,
     padding:4,
-   
   },
   img: {
     margin: 'auto',
@@ -94,8 +84,6 @@ const useStyles = makeStyles((theme) => ({
     fontSize:'1.5em'
   },
   content: {
-   
-    
     height:'auto',
      flexGrow: 1,
      padding: theme.spacing(1),
@@ -104,35 +92,16 @@ const useStyles = makeStyles((theme) => ({
        duration: theme.transitions.duration.leavingScreen,
      }),
      marginTop:'0',
-     
    },
   contentShift: {
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
-    
     marginLeft: drawerWidth ,
   },
-  
 }));
 
-<<<<<<< HEAD
-export default function Dashboard() {
-  const classes = useStyles();
-const [open, setOpen] = React.useState(false);
- const callback = (count) => {
-      setOpen(count)
-      console.log(open)
-
-    }
-
-
-  return ( 
-    <div>
-    <div>
-      <NavBar  name='Dashboard' parentCallback={callback} description="is an online platform allowing you to test and advance your skills in cyber security. Use it responsibly and don't hack your fellow members..." /> </div>
-=======
 
 const generateData = (start, end, step ,gap) => {
   for (let i = start; i < end; i += step) {
@@ -159,7 +128,6 @@ const [chartData, setGraphData] = React.useState(generateData(39,50, 10))
     <div>
     
       <NavBar  name='Dashboard' parentCallback={callback} description="is an online platform allowing you to test and advance your skills in cyber security. Use it responsibly and don't hack your fellow members..." /> 
->>>>>>> bef847a8800102d0df1016364a83975b69b281ad
       
       
     <div  className={clsx(classes.content, {
@@ -167,11 +135,6 @@ const [chartData, setGraphData] = React.useState(generateData(39,50, 10))
         }, classes.root)}>
         <Grid
         container
-<<<<<<< HEAD
-        direction="row"
-        justify="space-between"
-        alignItems="center"
-=======
         spacing={10}
         direction="column"
         justify="space-between"
@@ -183,7 +146,6 @@ const [chartData, setGraphData] = React.useState(generateData(39,50, 10))
         container
         direction="row"
         justify="space-between"
->>>>>>> bef847a8800102d0df1016364a83975b69b281ad
       >
       <Grid item>
       <Paper className={classes.paper}>
@@ -260,8 +222,6 @@ const [chartData, setGraphData] = React.useState(generateData(39,50, 10))
         </Grid>
       </Paper>
       </Grid>
-<<<<<<< HEAD
-=======
       <Grid item>
       <Paper className={classes.paper}>
         <Grid container direction="row" spacing={0.5}>
@@ -330,7 +290,6 @@ const [chartData, setGraphData] = React.useState(generateData(39,50, 10))
       
       </Grid>
       
->>>>>>> bef847a8800102d0df1016364a83975b69b281ad
       </Grid>
     </div>
     </div>
