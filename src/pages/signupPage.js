@@ -10,7 +10,9 @@ import particleComponent from '../component/particle.js'
 import Alert from '../component/Alert'
 import { stat } from "fs";
 
-
+import ReactNotification from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
+import { store } from 'react-notifications-component';
 
 
 
@@ -147,15 +149,17 @@ function SignupPage() {
   // });
 
   
-const user ={
+
+  const handleSubmit = event => {
+    {
+      const user ={
   Email:email,
   username:name,
   University:university, 
   Password: password
 }
-  const handleSubmit = event => {
-    {
-      console.log("sign")
+console.log("signing in")
+      
      
        
 fetch('http://localhost:8000/user/UserRegister', {
@@ -166,9 +170,38 @@ fetch('http://localhost:8000/user/UserRegister', {
         body: JSON.stringify(user)
     .then(response => {
         if (response.success==="user has been successfully register") {
-          window.location.href="http://localhost:8000/login"
-        }
+          console.log("success")
+  store.addNotification({
+  title: "Sign up Suucessful",
+  message: "Now Login with your Credentials",
+  type: "Success",
+  insert: "top",
+  container: "top-left",
+  animationIn: ["animated", "fadeIn"],
+  animationOut: ["animated", "fadeOut"],
+  dismiss: {
+    duration: 5000,
+    onScreen: true
+  }
+});
+         // window.location.href="/login"
+}
         else {
+          console.log("error")
+
+  store.addNotification({
+  title: "Signup Failure",
+  message: "Email Already Exists",
+  type: "danger",
+  insert: "top",
+  container: "top-left",
+  animationIn: ["animated", "fadeIn"],
+  animationOut: ["animated", "fadeOut"],
+  dismiss: {
+    duration: 5000,
+    onScreen: true
+  }
+});
             var error = new Error('Error ' + response.status + ': ' + response.statusText);
             error.response = response;
             throw error;
@@ -178,7 +211,24 @@ fetch('http://localhost:8000/user/UserRegister', {
         var errmess = new Error(error.message);
         throw errmess;
     })
-    .catch(error => (console.log(error.message)))
+    .catch(error => (
+      console.log(error.message),
+      store.addNotification({
+  title: "Sign up Failure",
+  message: "Internal Error",
+  type: "danger",
+  insert: "top",
+  container: "top-left",
+  animationIn: ["animated", "fadeIn"],
+  animationOut: ["animated", "fadeOut"],
+  dismiss: {
+    duration: 2000,
+    onScreen: true
+  }
+})
+
+
+      ))
 
             })
 
@@ -198,6 +248,7 @@ fetch('http://localhost:8000/user/UserRegister', {
     
       
     <div>
+    <ReactNotification/>
   <title>SignUp and Login</title>
   <link rel="stylesheet" type="text/css" href="style.css" />
   <div>

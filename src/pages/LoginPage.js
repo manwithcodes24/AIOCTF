@@ -9,6 +9,10 @@ import { BrowserRouter, Route, Switch, Redirect, Link } from "react-router-dom";
 import particleComponent from '../component/particle.js';
 
 
+import ReactNotification from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
+import { store } from 'react-notifications-component';
+
 
 
   const particlesOptions = {
@@ -168,8 +172,21 @@ function LoginPage() {
             
 
             localStorage.setItem('token', response.access.access);
-            localStorage.setItem('refreshTokn',response.access.refresh)
-            localStorage.setItem('creds', JSON.stringify(user));
+            localStorage.setItem('refreshToken',response.access.refresh)
+            localStorage.setItem('payload', response.payload)
+  store.addNotification({
+  title: "Login Succesful",
+  message: "Enjoy your Journey",
+  type: "success",
+  insert: "top",
+  container: "top-left",
+  animationIn: ["animated", "fadeIn"],
+  animationOut: ["animated", "fadeOut"],
+  dismiss: {
+    duration: 2000,
+    onScreen: true
+  }
+})
             window.href.location="http://localhost:8000/dashboard"
            
         }
@@ -179,15 +196,32 @@ function LoginPage() {
             throw error;
         }
     })
-    .catch(error => (console.log("logging error",error)))
+    .catch(error => (
+      console.log("logging error",error),
+  store.addNotification({
+  title: "Login Failure",
+  message: "check your credentials",
+  type: "danger",
+  insert: "top",
+  container: "top-left",
+  animationIn: ["animated", "fadeIn"],
+  animationOut: ["animated", "fadeOut"],
+  dismiss: {
+    duration: 2000,
+    onScreen: true
+  }
+})
+  ))
       
   }
   event.preventDefault();
 }
+ 
   return (
     
       
     <div>
+    <ReactNotification/>
   <title>Login</title>
   <link rel="stylesheet" type="text/css" href="style.css" />
   <div>
