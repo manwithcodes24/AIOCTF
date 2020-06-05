@@ -184,7 +184,7 @@ fetch('http://localhost:8000/user/UserRegister', {
     onScreen: true
   }
 });
-         // window.location.href="/login"
+          window.location.href="/login"
 }
         else {
           console.log("error")
@@ -202,14 +202,14 @@ fetch('http://localhost:8000/user/UserRegister', {
     onScreen: true
   }
 });
-            var error = new Error('Error ' + response.status + ': ' + response.statusText);
-            error.response = response;
-            throw error;
+            
+    window.href.location="/sign"
         }
     },
     error => {
         var errmess = new Error(error.message);
-        throw errmess;
+        throw errmess;      
+       window.href.location="/sign"
     })
     .catch(error => (
       console.log(error.message),
@@ -228,7 +228,9 @@ fetch('http://localhost:8000/user/UserRegister', {
 })
 
 
-      ))
+      ),
+    window.href.location="/sign"
+    )
 
             })
 

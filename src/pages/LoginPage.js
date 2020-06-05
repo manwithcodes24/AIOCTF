@@ -153,7 +153,7 @@ function LoginPage() {
     {
       console.log("loging in")
       const user ={
-        Email:email, 
+        username:email, 
         Password: password
         }
   console.log(user)
@@ -187,7 +187,7 @@ function LoginPage() {
     onScreen: true
   }
 })
-            window.href.location="http://localhost:8000/dashboard"
+            window.href.location="/dashboard"
            
         }
         else {
