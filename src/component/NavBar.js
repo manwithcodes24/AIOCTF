@@ -30,6 +30,9 @@ import {Link} from 'react-router-dom';
 import {Grid , Paper , ButtonBase} from '@material-ui/core';
 import '../assets/css/style.css'
 import logo from '../assets/image/logo4.png'
+import M from 'materialize-css'
+import {useHistory} from 'react-router-dom'
+
 
 
 const drawerWidth = 240;
@@ -207,7 +210,7 @@ export default function NavBar(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
- 
+ const History = useHistory()
   
 
   const handleDrawerClose = () => {
@@ -239,11 +242,7 @@ export default function NavBar(props) {
 {/* <<<<<<< HEAD*/}
           <Typography variant="h6" noWrap>
             {/* AIOC CTF   */}
-            
   <Typography>AIOC</Typography>
-
-
-  
           </Typography>
 {/* =======
 
@@ -253,7 +252,10 @@ export default function NavBar(props) {
           <div style={{width:'50%'}}></div>
           {/* temp fix to slide things  */}
           <Grid xs={1} sm={2} className={classes.navText} style={{color:' #00FF00'}}>
-          <i className="fa fa-shopping-cart" aria-hidden="true"></i> Switch to VIP
+         <a href="/login"> <button className="btn waves-effect waves-light insta"  onClick={()=>{ 
+            localStorage.clear()
+            }}
+            >Logout</button></a>
         </Grid>
         <Grid xs={1} sm={2} className={classes.navText}>
         <i className="fa fa-tshirt"></i>
@@ -282,12 +284,8 @@ Swag Store
           paper: classes.drawerPaper,
         }}
       >
-       
-        
-       
         <Divider />
         <List className={classes.navList}>
-          
           <ListItem button onClick={handleMain}>
         <ListItemIcon>
           <InboxIcon />

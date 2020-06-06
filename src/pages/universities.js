@@ -115,23 +115,15 @@ const [universities,setuniversities]= React.useState([{}])
             {universities.map( (list,key) => (
 <ListItem  key={list.id} className={classes.universitiesListItem} >
                 <ListItemText
-                 
                 >Name : {list.Name}</ListItemText><br/>
-              
                 <ListItemText>
-                 
                 Location : {list.Location}</ListItemText><br/>
                 <ListItemText>
-                 
                 World Ranking : {list.World_Ranking} </ListItemText><br/>
                 <ListItemText>
                 Status : {list.status}</ListItemText><br/>
-                
               </ListItem>
-
             )	)}
-              
-        
           </List>
         </div>
       </Grid>

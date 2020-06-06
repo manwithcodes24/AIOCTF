@@ -120,9 +120,7 @@ function Announcement() {
                     <ListItemText
 
                     > {ann.Description}</ListItemText>
-
                   </ListItem>
-
                 )
                 )}
 

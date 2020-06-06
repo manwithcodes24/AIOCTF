@@ -3,7 +3,7 @@ import React ,{useState,useEffect} from "react";
 import ReactDOM from "react-dom";
 
 
-import { BrowserRouter,Switch, Route, Redirect, withRouter } from 'react-router-dom';
+import { BrowserRouter,Switch, Route, Redirect, withRouter,useHistory } from 'react-router-dom';
 
 
 //import { connect } from 'react-redux';
@@ -26,7 +26,7 @@ import Dashboard from "./pages/dashboard.js";
 import Profile from "./pages/profile.js";
 
 function App (){
-
+const History = useHistory()
 return (
   <BrowserRouter>
 
@@ -62,7 +62,6 @@ return (
        </BrowserRouter>
        )
 }
-
 export default App;
      
         

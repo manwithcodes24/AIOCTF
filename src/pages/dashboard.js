@@ -234,6 +234,7 @@ export default function Dashboard() {
 
   }
 
+
   useEffect(() => {
     fetch('http://localhost:8000/total', {
       headers: {

@@ -176,7 +176,7 @@ function LoginPage() {
             localStorage.setItem('refreshToken', response.access.refresh)
             localStorage.setItem('payload', JSON.stringify(response.payload.user_id))
             store.addNotification({
-              title: "Login Succesful",
+              title: "Login Successful",
               message: "Enjoy your Journey",
               type: "success",
               insert: "top",
@@ -188,7 +188,7 @@ function LoginPage() {
                 onScreen: true
               }
             })
-          //  History.push('/dashboard')
+
           }
           else {
             var error = new Error('Error ' + response.status);
@@ -251,7 +251,7 @@ function LoginPage() {
               <input type="password" name="password" placeholder="Password"
                 onChange={(event) => { setPassword(event.target.value) }} />
               <a href="#">Forgot Your Password</a>
-              <button>Sign In</button>
+             <button type="submit">Sign In</button>
             </form>
           </div>
           <div className="overlay-container">
@@ -259,7 +259,7 @@ function LoginPage() {
               <div className="overlay-panel overlay-left">
                 <h1>Welcome Back!</h1>
                 <p>To keep connected with us please login with your personal info</p>
-                <button className="ghost" id="signIn">Sign In</button>
+            <button className="ghost" id="signIn">Sign In</button>
               </div>
               <div className="overlay-panel overlay-right">
                 <h1>Hello, Friend!</h1>
