@@ -159,9 +159,6 @@ function SignupPage() {
   Password: password
 }
 console.log("signing in")
-      
-     
-       
 fetch('http://localhost:8000/user/UserRegister', {
         method: 'POST',
         headers: { 
@@ -184,7 +181,6 @@ fetch('http://localhost:8000/user/UserRegister', {
     onScreen: true
   }
 });
-          window.location.href="/login"
 }
         else {
           console.log("error")

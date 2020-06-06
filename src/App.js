@@ -34,7 +34,7 @@ return (
      <Switch> 
     
     
-     {!localStorage.token} ? (<div>
+     {!localStorage.token ? (<div>
       <Route path='/login' component={ LoginPage } />
           
 <Route path='/sign' component={SignupPage} />
@@ -46,9 +46,6 @@ return (
  <Route exact path="/announcement" component={Announcement} />
 
  <Route exact path="/challenges" component={ Challenges } />
-  
- 
-  
   <Route exact path="/dashboard" component={Dashboard} />
   <Route exact path="/support" component={ Support} />
   <Route exact path="/universities" component={ Universities} />
@@ -57,12 +54,15 @@ return (
 
 
 
-  <Redirect to="/login" />
+  <Redirect from='/' to="/dashboard" />
+  <Redirect from='/login' to="/dashboard" />
+
        </Switch>
        
        </BrowserRouter>
        )
 }
+
 export default App;
      
         

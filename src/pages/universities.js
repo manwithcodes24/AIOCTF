@@ -65,9 +65,10 @@ const [universities,setuniversities]= React.useState([{}])
         headers: {
             'Authorization': localStorage.getItem('token')
         },
-    })
+    }).then(response=>response.json())
     .then(response => {
-        if (response.ok) {
+        if (response[0]) {
+          console.log(response)
             return response;
         }
         else {
@@ -81,7 +82,7 @@ const [universities,setuniversities]= React.useState([{}])
         throw errmess;
     })
     .then(response => {
-      setuniversities(response.data.map(list=>universities))
+      setuniversities(response)
     })
     .catch(error => (console.log(error.message)));
 

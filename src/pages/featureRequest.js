@@ -217,8 +217,7 @@ useEffect(()=>{
      // setreq(response.data.map(list=>requests))
     })
     .catch(error => (console.log(error.message)));
-
-            })
+})
 
 
 
@@ -226,13 +225,14 @@ useEffect(()=>{
   const handleSubmit = event => {
       const request ={
         Title:title, 
-        Description: description
-
+        Description: description,
+        userid: localStorage.getItem('payload')
       }
 
   fetch('http://localhost:8000/featureReq', {
         method: 'POST',
-        headers: { 
+        headers: {
+          // 'Content-Type': 'application/json',
             'Authorization': localStorage.getItem('token')
         },
         body: JSON.stringify(request)
@@ -241,6 +241,7 @@ useEffect(()=>{
         if (response.ok) {
             return response;
         } else {
+          console.log("ajshbakj")
             var error = new Error('Error ' + response.status + ': ' + response.statusText);
             error.response = response;
             throw error;
@@ -251,11 +252,8 @@ useEffect(()=>{
         })
     .then(response => response.json())
     .then(response => {
-        if (response.success) {
-            
-
-            console.log(response.success)
-           
+        if (response) {
+            console.log(response)
         }
         else {
             var error = new Error('Error ' + response.status);
@@ -263,28 +261,18 @@ useEffect(()=>{
             throw error;
         }
     })
-    .catch(error => (console.log("logging err",error)))     
- 
+    .catch(error => (console.log("logging err",error)))
     event.preventDefault();
 }
-
-
-     
 
 return(
        <div>
        <NavBar  name='Feature Request' description="is an online platform allowing you to test and advance your skills in cyber security. Use it responsibly and don't hack your fellow members..." /> 
-       
 <div>
-  
   <div>
-  
   <div className="particles" params={particlesOptions} />
-    
       <title>Make a Request</title>
         <form  onSubmit={handleSubmit}>
-          
-          
           <label for="title">Title</label>
           <input type="text" name="title" placeholder="title" 
            onChange={(event) => {setTitle(event.target.value)}}/>
@@ -293,7 +281,7 @@ return(
            onChange={(event) => {setDescription(event.target.value)}} />
           <button>Make Request</button>
         </form>
-     
+
   </div>
 </div>
 <div  className={clsx(classes.content,

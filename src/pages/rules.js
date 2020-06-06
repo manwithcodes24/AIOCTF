@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Rules() {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
-    const [rules,setrules] =React.useState([{}]);
+    const [rules,setrules] =React.useState([]);
 
 
  useEffect(()=>{
@@ -64,9 +64,9 @@ export default function Rules() {
         headers: {
             'Authorization': localStorage.getItem('token')
         },
-    })
+    }).then(response=>response.json())
     .then(response => {
-        if (response.ok) {
+        if (response[0].id) {
             return response;
         }
         else {
@@ -80,8 +80,9 @@ export default function Rules() {
         throw errmess;
     })
     .then(response => {
-      //fetching rule doc error
-     //setrules(response.data.map(list=>rule))
+      console.log("jajajajj")
+      setrules(response)
+      console.log(rules)
     })
     .catch(error => (console.log(error.message)));
 
@@ -92,29 +93,24 @@ export default function Rules() {
 const callback = (count) => {
          setOpen(count)
          console.log(open)
-   
        }
 const [expanded, setExpanded] = React.useState(false);
 
 const handleChange = (panel) => (event, isExpanded) => {
          setExpanded(isExpanded ? panel : false);
        };
-     
-      
     return(
-        
       <div>
-      <NavBar  name='Rules' 
-      parentCallback={callback} description="is an online platform allowing you to test and advance your skills in cyber security. Use it responsibly and don't hack your fellow members..." /> 
-      
- {rules.map( (key,list) => (
-
+      <NavBar  name='Rules'
+      parentCallback={callback} description="is an online platform allowing you to test and advance your skills in cyber security. Use it responsibly and don't hack your fellow members..." />
+ {rules.map(rule => {
+    return(
        <div  className={clsx(classes.content, {
         [classes.contentShift]: open
       }, classes.root)}>
 
 
-      <ExpansionPanel className={classes.expansionPanel} expanded={expanded === 'panel1'} 
+      <ExpansionPanel className={classes.expansionPanel} expanded={expanded === 'panel1'}
       onChange={handleChange('panel1')}>
 
         <ExpansionPanelSummary
@@ -122,20 +118,19 @@ const handleChange = (panel) => (event, isExpanded) => {
           aria-controls="panel1bh-content"
           id="panel1bh-header"
         >
-          <Typography className={classes.heading}> <div className='rulesCounting'> 1</div></Typography>
-          <Typography className={classes.secondaryHeading}>{list.Title}</Typography>
+          <Typography className={classes.heading}> <div className='rulesCounting'>1</div></Typography>
+          <Typography className={classes.secondaryHeading}>{rule.Title}</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
           <Typography>
-            {list.Description}
+            {rule.Discription}
           </Typography>
         </ExpansionPanelDetails>
       </ExpansionPanel>
      </div>
      )
-)}
+    })
+  }
      </div>
-      
     )
-
 }

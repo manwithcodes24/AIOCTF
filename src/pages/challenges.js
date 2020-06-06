@@ -73,9 +73,9 @@ export default function Challenges( ) {
         headers: {
             'Authorization': localStorage.getItem('token')
         },
-    })
+    }).then(response=>response.json())
     .then(response => {
-        if (response.ok) {
+        if (response[0]) {
             return response;
         }
         else {
@@ -89,7 +89,7 @@ export default function Challenges( ) {
         throw errmess;
     })
     .then(response => {
-      setchallenges(response.data.map(list=>challenges))
+      setchallenges(response)
     })
     .catch(error => (console.log(error.message)));
 

@@ -69,13 +69,13 @@ const classes = useStyles();
 	const  [support,setsupport] = React.useState([{}])
   
 useEffect(()=>{
-      fetch('http://localhost:8000/Support', {
+      fetch('http://localhost:8000/support', {
         headers: {
             'Authorization': localStorage.getItem('token')
         },
-    })
+    }).then(response=>response.json())
     .then(response => {
-        if (response.ok) {
+        if (response[0]) {
             return response;
         }
         else {
@@ -89,7 +89,7 @@ useEffect(()=>{
         throw errmess;
     })
     .then(response => {
-      setsupport(response.data.map(list=>Support))
+      setsupport(response)
     })
     .catch(error => (console.log(error.message)));
 
@@ -110,15 +110,15 @@ useEffect(()=>{
         </Typography>
         <div className={classes.demo}>
           <List >
-            {support.map( (key,list) => (
+            {support.map(list => (
 <ListItem  key={list.id} className={classes.announcementListItem} >
                 <ListItemText
                  
-                > {list.name}</ListItemText>
+                > {list.Phone}</ListItemText>
               
                 <ListItemText
                  
-                > {list.email}</ListItemText>
+                > {list.Email}</ListItemText>
                 
               </ListItem>
 
