@@ -8,6 +8,7 @@ import { Grid, Typography, List, ListItem, ListItemText } from '@material-ui/cor
 import { BrowserRouter, Route, Switch, Redirect, Link } from "react-router-dom";
 
 import particleComponent from '../component/particle.js';
+import M from "materialize-css"
 
 
 
@@ -216,7 +217,7 @@ export default function FeatureRequest() {
         //error in fetching
         setreq(response)
       })
-      .catch(error => (console.log(error.message)));
+      .catch(error => (M.toast({html:error.message,classes:"red"})));
   })
 
 
@@ -236,12 +237,11 @@ export default function FeatureRequest() {
         'Authorization': localStorage.getItem('token')
       },
       body: JSON.stringify(requests)
-    }).then(response => response.json())
+    })
       .then(response => {
-        if (response[0]) {
+        if (response.ok) {
           return response;
         } else {
-          console.log("ajshbakj")
           var error = new Error('Error ' + response.status + ': ' + response.statusText);
           error.response = response;
           throw error;
@@ -252,7 +252,7 @@ export default function FeatureRequest() {
         })
       .then(response => {
         if (response) {
-          console.log(response)
+          M.toast({html: 'request registered',classes:"green"})
         }
         else {
           var error = new Error('Error ' + response.status);
@@ -260,7 +260,7 @@ export default function FeatureRequest() {
           throw error;
         }
       })
-      .catch(error => (console.log("logging err", error)))
+      .catch(error => (M.toast({html:error,classess:"red"})))
     event.preventDefault();
   }
 
@@ -292,7 +292,7 @@ export default function FeatureRequest() {
                 {req.map(list => {
                   return (
                     <ListItem key={list.id} className={classes.announcementListItem} >
-                      {list.userid === localStorage.getItem('token') ?
+                      {list.userid === localStorage.getItem('payload') ?
                         (
                           <div>
                             <ListItemText>
@@ -302,7 +302,7 @@ export default function FeatureRequest() {
 
                             <ListItemText>
 
-                              {list.Description}
+                              {list.Discription}
                             </ListItemText>
                           </div>) :
 

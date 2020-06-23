@@ -30,17 +30,15 @@ const History = useHistory()
 return (
   <BrowserRouter>
 
-    
-     <Switch> 
-    
-    
+     <Switch>
+
      {!localStorage.token ? (<div>
       <Route path='/login' component={ LoginPage } />
-          
+
 <Route path='/sign' component={SignupPage} />
  <Redirect to="/login" />
  </div>) : (<div>
-       
+
 <Route exact path="/rules" component={Rules} />
 
  <Route exact path="/announcement" component={Announcement} />
@@ -50,22 +48,19 @@ return (
   <Route exact path="/support" component={ Support} />
   <Route exact path="/universities" component={ Universities} />
   <Route exact path="/featureReq" component={FeatureRequest} />
-  <Route exact path="/profile" component={ Profile} /></div>)}
-
-
-
+  <Route exact path="/profile" component={ Profile} />
   <Redirect from='/' to="/dashboard" />
   <Redirect from='/login' to="/dashboard" />
 
+  </div>)}
+
        </Switch>
-       
+
        </BrowserRouter>
        )
 }
 export default App;
-     
-        
-    
+
 
 
 

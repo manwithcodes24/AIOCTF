@@ -148,26 +148,28 @@ function SignupPage() {
   //   };
   // });
 
-  
+
 
   const handleSubmit = event => {
+    debugger;
     {
       const user ={
   Email:email,
   username:name,
-  University:university, 
+  University:university,
   Password: password
 }
-console.log("signing in")
+debugger;
+
 fetch('http://localhost:8000/user/UserRegister', {
         method: 'POST',
-        headers: { 
-            'Content-Type':'application/json' 
+        headers: {
+            'Content-Type':'application/json'
         },
         body: JSON.stringify(user)
     .then(response => {
-        if (response.success==="user has been successfully register") {
-          console.log("success")
+      debugger;
+        if (response.ok) {
   store.addNotification({
   title: "Sign up Suucessful",
   message: "Now Login with your Credentials",
@@ -183,8 +185,6 @@ fetch('http://localhost:8000/user/UserRegister', {
 });
 }
         else {
-          console.log("error")
-
   store.addNotification({
   title: "Signup Failure",
   message: "Email Already Exists",
@@ -198,14 +198,11 @@ fetch('http://localhost:8000/user/UserRegister', {
     onScreen: true
   }
 });
-            
-    window.href.location="/sign"
         }
     },
     error => {
         var errmess = new Error(error.message);
-        throw errmess;      
-       window.href.location="/sign"
+        throw errmess;
     })
     .catch(error => (
       console.log(error.message),
@@ -225,7 +222,6 @@ fetch('http://localhost:8000/user/UserRegister', {
 
 
       ),
-    window.href.location="/sign"
     )
 
             })
@@ -238,15 +234,13 @@ fetch('http://localhost:8000/user/UserRegister', {
    
 
     event.preventDefault();
-    
-    
+
+
   }
-  
+
   return (
-    
-      
+
     <div>
-    <ReactNotification/>
   <title>SignUp and Login</title>
   <link rel="stylesheet" type="text/css" href="style.css" />
   <div>
@@ -257,7 +251,7 @@ fetch('http://localhost:8000/user/UserRegister', {
       <div className="form-container sign-in-container" >
         <form onSubmit={handleSubmit}>
           <h1>Create Account</h1>
-          
+
           <span>Use your email for registration</span><br/>
           <input type="text" name="name" placeholder="Name" 
           onChange={(event) => {setName(event.target.value)}} /> 
@@ -268,14 +262,14 @@ fetch('http://localhost:8000/user/UserRegister', {
 
           <input type="password" name="password" placeholder="Password"
            onChange={(event) => {setPassword(event.target.value)}}/>
-          
+
           <button type="submit">Sign Up</button>
         </form>
       </div>
       <div className="form-container sign-up-container">
         <form action="#">
           <h1>Sign In</h1>
-          
+
           <span> Use your account</span><br/>
           <input type="email" name="email" placeholder="Email" />
           <input type="password" name="password" placeholder="Password" />
@@ -304,7 +298,7 @@ fetch('http://localhost:8000/user/UserRegister', {
   </div>
 </div>
 
-   
+
   );
 }
 

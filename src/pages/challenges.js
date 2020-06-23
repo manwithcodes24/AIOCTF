@@ -5,6 +5,7 @@ import NavBar from '../component/NavBar'
 import '../assets/css/style.css'
 import { makeStyles } from '@material-ui/core/styles';
 import {Grid, Typography, List, ListItem, ListItemText} from '@material-ui/core'
+import M from "materialize-css"
 //import LoginPage from "./pages/LoginPage.js";
 const drawerWidth = 240;
 const contentWidth = 200 ; 
@@ -64,12 +65,11 @@ export default function Challenges( ) {
     const [challenges,setchallenges]= React.useState([{}])
      const callback = (count) => {
           setOpen(count)
-          console.log(open)
 
     
         }
         useEffect(()=>{
-      fetch('http://localhost:8000/Challenge', {
+      fetch('http://localhost:8000/Challenge/', {
         headers: {
             'Authorization': localStorage.getItem('token')
         },
@@ -81,7 +81,7 @@ export default function Challenges( ) {
         else {
             var error = new Error('Error ' + response.status + ': ' + response.statusText);
             error.response = response;
-            throw error;
+            throw error;return Response({'success':'you have completed this challenge'})
         }
     },
     error => {
@@ -98,40 +98,35 @@ export default function Challenges( ) {
 
 
 const handleSubmit = event => {
-  //setchallenege_id(challengeId.value)
+  // setchallenege_id(challengeId.value)
     {
       const data ={
-        Key : key,
+        key : key,
       };
-      
-       fetch('http://localhost:8000/academics/checkResult?id={challengeId.value}',{
+      debugger;
+       fetch('http://localhost:8000/Challenge/checkResult?id='+event,{
         method :'POST',
         headers: {
+          'Content-Type': 'application/json',
             'Authorization': localStorage.getItem('token')
         },
         body :JSON.stringify(data)
-
        }).then(response => response.json(),
       )
-       .then(data =>{console.log("Success")
-         window.alert("Key Submited Successfully")
+       .then(data =>{
+         debugger;
+         M.toast({html:"Key Submitted Successfully"})
      })
-       .catch((error)=>{console.log("error in sending key",error)
-        window.alert("Key not Submited,Try later")})
+       .catch((error)=>{
+         debugger;
+        M.toast({html:"Key not Submitted,Try later"})})
 
     }
     event.preventDefault();
 
-    
-    
-    
-  }  
- 
+  }
 
     return(
-
-     
-      
         <div>
        <div>
        <NavBar  name='Challenges' parentCallback={callback} description="is an online platform allowing you to test and advance your skills in cyber security. Use it responsibly and don't hack your fellow members..." /> 
@@ -167,18 +162,12 @@ const handleSubmit = event => {
                 
                 <ListItemText>
 
-                 <form 
-                  onSubmit={handleSubmit} >
+                 <form
+                  onSubmit={()=>handleSubmit(list.id)} >
               <label for="key">Key</label>
               <input type="string" name="key" placeholder=""
               onChange={(event) => {setKey(event.target.value)}}/>
-              <input type="hidden" name="challengeId"
-              value={list.id}
-               />
-              
-          
           <button type="submit">Submit key</button>
-          
                 </form>
                 </ListItemText>
                 

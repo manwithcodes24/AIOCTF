@@ -63,9 +63,6 @@ function Announcement() {
   // const [Allchallenges,setChallenges]= React.useState([])
   const callback = (count) => {
     setOpen(count)
-    console.log(open)
-
-
   }
 
   useEffect(() => {
@@ -119,8 +116,31 @@ function Announcement() {
 
                     <ListItemText
 
-                    > {ann.Description}</ListItemText>
+                    > {ann.Discription}</ListItemText>
                   </ListItem>
+                //   <div  className={clsx(classes.content, {
+                //     [classes.contentShift]: open
+                //   }, classes.root)}>
+            
+            
+                //   <ExpansionPanel className={classes.expansionPanel} expanded={expanded === 'panel1'}
+                //   onChange={handleChange('panel1')}>
+            
+                //     <ExpansionPanelSummary
+                //       expandIcon={<ExpandMoreIcon />}
+                //       aria-controls="panel1bh-content"
+                //       id="panel1bh-header"
+                //     >
+                //       <Typography className={classes.heading}> <div className='rulesCounting'>1</div></Typography>
+                //       <Typography className={classes.secondaryHeading}>{ann.Title}</Typography>
+                //     </ExpansionPanelSummary>
+                //     <ExpansionPanelDetails>
+                //       <Typography>
+                //         {ann.Discription}
+                //       </Typography>
+                //     </ExpansionPanelDetails>
+                //   </ExpansionPanel>
+                //  </div>
                 )
                 )}
 

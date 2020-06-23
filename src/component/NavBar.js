@@ -53,7 +53,6 @@ const useStyles = makeStyles((theme) => ({
   },
   appBarShift: {
     backgroundColor: '#343c41',
-    
     marginLeft: drawerWidth,
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.easeOut,
@@ -251,12 +250,6 @@ export default function NavBar(props) {
         <div style={{justifyContent:'flex-end',flexDirection:'row',display:'flex',width:'100%' }} className={classes.root}>
           <div style={{width:'50%'}}></div>
           {/* temp fix to slide things  */}
-          <Grid xs={1} sm={2} className={classes.navText} style={{color:' #00FF00'}}>
-         <a href="/login"> <button className="btn waves-effect waves-light insta"  onClick={()=>{ 
-            localStorage.clear()
-            }}
-            >Logout</button></a>
-        </Grid>
         <Grid xs={1} sm={2} className={classes.navText}>
         <i className="fa fa-tshirt"></i>
 Swag Store
@@ -272,6 +265,12 @@ Swag Store
         </Grid>
         <Grid xs={1} sm={2} className={classes.navText}>
     Member Finder
+        </Grid>
+        <Grid xs={1} sm={2} className={classes.navText} style={{color:' #00FF00'}}>
+         <a href="/login"> <button className="btn waves-effect waves-light"  onClick={()=>{ 
+            localStorage.clear()
+            }}
+            >Logout</button></a>
         </Grid>
         </div>
       </AppBar>

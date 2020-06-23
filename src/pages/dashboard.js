@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import '../assets/css/style.css'
 // import { makeStyles } from '@material-ui/core/styles';
 import { List, ListItem, ListItemText } from '@material-ui/core'
+import M from "materialize-css"
 
 //import Paper from '@material-ui/core/Paper';
 import clsx from 'clsx';
@@ -230,7 +231,6 @@ export default function Dashboard() {
 
   const callback = (count) => {
     setOpen(count)
-    console.log(open)
 
   }
 
@@ -264,7 +264,7 @@ export default function Dashboard() {
           }
         )
       })
-      .catch(error => (console.log(error.message)));
+      .catch(error => (M.toast({html:error.message})));
 
 
     fetch('http://localhost:8000/user/Profile', {
@@ -281,7 +281,7 @@ export default function Dashboard() {
         setPoints(response[0].points)
         setBadges(response[0].Badges)
       })
-      .catch((error) => { console.log("error in sending key", error) })
+      .catch((error) => { M.toast({html:"error in sending key", error}) })
   })
 
   const [chartData, setGraphData] = React.useState(generateData(39, 50, 10))

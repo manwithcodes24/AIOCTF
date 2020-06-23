@@ -80,9 +80,7 @@ export default function Rules() {
         throw errmess;
     })
     .then(response => {
-      console.log("jajajajj")
       setrules(response)
-      console.log(rules)
     })
     .catch(error => (console.log(error.message)));
 
