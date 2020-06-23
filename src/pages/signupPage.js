@@ -149,31 +149,30 @@ function SignupPage() {
   // });
 
 
-
   const handleSubmit = event => {
-    debugger;
     {
       const user ={
-  Email:email,
+        Email:email,
   username:name,
   University:university,
   Password: password
+ 
 }
-debugger;
-
-fetch('http://localhost:8000/user/UserRegister', {
+console.log(user)
+fetch(localStorage.urll +'/user/UserRegister', {
         method: 'POST',
-        headers: {
-            'Content-Type':'application/json'
+        headers: { 
+            'Content-Type':'application/json' 
         },
         body: JSON.stringify(user)
-    .then(response => {
-      debugger;
-        if (response.ok) {
+      })
+      .then(response => {
+        if (response.status==200) {
+          console.log(response)
   store.addNotification({
   title: "Sign up Suucessful",
   message: "Now Login with your Credentials",
-  type: "Success",
+  type: "success",
   insert: "top",
   container: "top-left",
   animationIn: ["animated", "fadeIn"],
@@ -185,6 +184,8 @@ fetch('http://localhost:8000/user/UserRegister', {
 });
 }
         else {
+          console.log(response)
+
   store.addNotification({
   title: "Signup Failure",
   message: "Email Already Exists",
@@ -198,11 +199,13 @@ fetch('http://localhost:8000/user/UserRegister', {
     onScreen: true
   }
 });
+            
         }
     },
     error => {
         var errmess = new Error(error.message);
-        throw errmess;
+        throw errmess;      
+       
     })
     .catch(error => (
       console.log(error.message),
@@ -222,9 +225,9 @@ fetch('http://localhost:8000/user/UserRegister', {
 
 
       ),
+   
     )
 
-            })
 
 
 
@@ -234,13 +237,14 @@ fetch('http://localhost:8000/user/UserRegister', {
    
 
     event.preventDefault();
-
-
+    
+    
   }
 
   return (
 
     <div>
+    <ReactNotification/>
   <title>SignUp and Login</title>
   <link rel="stylesheet" type="text/css" href="style.css" />
   <div>

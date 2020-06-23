@@ -161,7 +161,7 @@ function LoginPage() {
       }
       console.log(user)
 
-      fetch('http://localhost:8000/user/UserLogin', {
+      fetch(localStorage.urll +'/user/UserLogin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -175,6 +175,7 @@ function LoginPage() {
             localStorage.setItem('token', response.access.access);
             localStorage.setItem('refreshToken', response.access.refresh)
             localStorage.setItem('payload', JSON.stringify(response.payload.user_id))
+            console.log(response)
             store.addNotification({
               title: "Login Successful",
               message: "Enjoy your Journey",
@@ -188,7 +189,7 @@ function LoginPage() {
                 onScreen: true
               }
             })
-
+window.location="/"
           }
           else {
             var error = new Error('Error ' + response.status);
@@ -274,7 +275,7 @@ function LoginPage() {
 
 
   );
-}
+} 
 
 
 export default LoginPage;

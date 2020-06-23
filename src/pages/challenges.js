@@ -2,6 +2,12 @@ import React, {useState,useEffect} from 'react';
 import clsx from 'clsx';
 import NavBar from '../component/NavBar'
 
+import ReactNotification from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
+import { store } from 'react-notifications-component';
+
+
+
 import '../assets/css/style.css'
 import { makeStyles } from '@material-ui/core/styles';
 import {Grid, Typography, List, ListItem, ListItemText} from '@material-ui/core'
@@ -57,19 +63,15 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function Challenges( ) {
+export default function challenges( ) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
      const [key, setKey] = React.useState('');
      const [challenge_Id, setchallenege_id] = React.useState('');
     const [challenges,setchallenges]= React.useState([{}])
-     const callback = (count) => {
-          setOpen(count)
-
-    
-        }
-        useEffect(()=>{
-      fetch('http://localhost:8000/Challenge/', {
+       
+useEffect(()=>{
+      fetch(localStorage.urll +'/Challenge/', {
         headers: {
             'Authorization': localStorage.getItem('token')
         },
@@ -97,39 +99,90 @@ export default function Challenges( ) {
 
 
 
-const handleSubmit = event => {
-  // setchallenege_id(challengeId.value)
-    {
-      const data ={
-        key : key,
-      };
-      debugger;
-       fetch('http://localhost:8000/Challenge/checkResult?id='+event,{
-        method :'POST',
-        headers: {
-          'Content-Type': 'application/json',
-            'Authorization': localStorage.getItem('token')
-        },
-        body :JSON.stringify(data)
-       }).then(response => response.json(),
-      )
-       .then(data =>{
-         debugger;
-         M.toast({html:"Key Submitted Successfully"})
-     })
-       .catch((error)=>{
-         debugger;
-        M.toast({html:"Key not Submitted,Try later"})})
 
+const handle=(keyid)=>{
+  {
+  const data={
+    key:key
+  }
+  console.log(keyid)
+  console.log(data)
+  debugger;
+  fetch(localStorage.urll +'/Challenge/checkResult?id='+ keyid, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('token')
+            },
+            body: JSON.stringify(data)
+        }).then(response=>response.json())
+            .then(response => {
+                if (response.success) {
+                    console.log(response)
+                    debugger
+                    store.addNotification({
+                        title: "Leader",
+                        message: "Success",
+                        type: "success",
+                        insert: "top",
+                        container: "top-left",
+                        animationIn: ["animated", "fadeIn"],
+                        animationOut: ["animated", "fadeOut"],
+                        dismiss: {
+                            duration: 5000,
+                            onScreen: true
+                        }
+                    });
+                }
+                else {
+                    console.log(response)
+
+                    store.addNotification({
+                        title: "Error",
+                        message: "Key not submitted",
+                        type: "danger",
+                        insert: "top",
+                        container: "top-left",
+                        animationIn: ["animated", "fadeIn"],
+                        animationOut: ["animated", "fadeOut"],
+                        dismiss: {
+                            duration: 5000,
+                            onScreen: true
+                        }
+                    });
+
+                }
+            },
+                error => {
+                    var errmess = new Error(error.message);
+                    throw errmess;
+
+                })
+            .catch(error => (
+                console.log(error),
+                store.addNotification({
+                    title: " Failure",
+                    message: "Internal Error",
+                    type: "danger",
+                    insert: "top",
+                    container: "top-left",
+                    animationIn: ["animated", "fadeIn"],
+                    animationOut: ["animated", "fadeOut"],
+                    dismiss: {
+                        duration: 2000,
+                        onScreen: true
+                    }
+                })
+                ))
+                
+ //event.preventDefault();
     }
-    event.preventDefault();
-
   }
 
     return(
         <div>
+        <ReactNotification/>
        <div>
-       <NavBar  name='Challenges' parentCallback={callback} description="is an online platform allowing you to test and advance your skills in cyber security. Use it responsibly and don't hack your fellow members..." /> 
        </div> 
        <div  className={clsx(classes.content, {
         [classes.contentShift]: open
@@ -162,12 +215,11 @@ const handleSubmit = event => {
                 
                 <ListItemText>
 
-                 <form
-                  onSubmit={()=>handleSubmit(list.id)} >
+                 <form >
               <label for="key">Key</label>
               <input type="string" name="key" placeholder=""
               onChange={(event) => {setKey(event.target.value)}}/>
-          <button type="submit">Submit key</button>
+          <button onClick={()=>handle(list.id)}>Submit key</button>
                 </form>
                 </ListItemText>
                 

@@ -12,8 +12,8 @@ import SignupPage from './pages/signupPage.js';
 
 import Announcement from './pages/announcement.js'
 
-import Challenges from './pages/challenges.js'
-
+//import NewChallenges from './pages/NewChallenges.js'
+import NewPage from './pages/Newpge.js'
 import FeatureRequest from './pages/featureRequest.js'
 
 import Rules from './pages/rules.js'
@@ -26,7 +26,15 @@ import Dashboard from "./pages/dashboard.js";
 import Profile from "./pages/profile.js";
 
 function App (){
-const History = useHistory()
+
+  useEffect(()=>{
+    localStorage.setItem('urll',"https://192b94e97f1f.ngrok.io")
+//localStorage.removeItem('url')
+  })
+    
+  
+//const History = useHistory()
+
 return (
   <BrowserRouter>
 
@@ -43,14 +51,15 @@ return (
 
  <Route exact path="/announcement" component={Announcement} />
 
- <Route exact path="/challenges" component={ Challenges } />
+ <Route exact path="/challenges" component={ NewPage } />
   <Route exact path="/dashboard" component={Dashboard} />
   <Route exact path="/support" component={ Support} />
   <Route exact path="/universities" component={ Universities} />
   <Route exact path="/featureReq" component={FeatureRequest} />
   <Route exact path="/profile" component={ Profile} />
-  <Redirect from='/' to="/dashboard" />
-  <Redirect from='/login' to="/dashboard" />
+  <Redirect from="/login" to="/dashboard"/>
+  <Redirect from="/" to="/dashboard"/>
+  
 
   </div>)}
 

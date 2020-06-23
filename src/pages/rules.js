@@ -60,7 +60,7 @@ export default function Rules() {
 
 
  useEffect(()=>{
-      fetch('http://localhost:8000/rule', {
+      fetch(localStorage.urll +'/rule', {
         headers: {
             'Authorization': localStorage.getItem('token')
         },

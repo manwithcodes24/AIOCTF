@@ -236,7 +236,7 @@ export default function Dashboard() {
 
 
   useEffect(() => {
-    fetch('http://localhost:8000/total', {
+    fetch(localStorage.urll+'/total', {
       headers: {
         'Authorization': localStorage.getItem('token')
       },
@@ -267,7 +267,7 @@ export default function Dashboard() {
       .catch(error => (M.toast({html:error.message})));
 
 
-    fetch('http://localhost:8000/user/Profile', {
+    fetch(localStorage.urll +'/user/Profile', {
       method: 'GET',
       headers: {
         'Authorization': localStorage.getItem('token')

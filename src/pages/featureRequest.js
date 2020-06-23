@@ -194,7 +194,7 @@ export default function FeatureRequest() {
 
 
   useEffect(() => {
-    fetch('http://localhost:8000/featureReq', {
+    fetch(localStorage.urll +'/featureReq', {
       headers: {
         'Authorization': localStorage.getItem('token')
       },
@@ -230,7 +230,7 @@ export default function FeatureRequest() {
       userid: String(localStorage.getItem('payload'))
     }
 
-    fetch('http://localhost:8000/featureReq', {
+    fetch(localStorage.urll +'/featureReq', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',

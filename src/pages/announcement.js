@@ -66,7 +66,7 @@ function Announcement() {
   }
 
   useEffect(() => {
-    fetch('http://localhost:8000/announcement', {
+    fetch(localStorage.urll +'/announcement', {
       headers: {
         'Authorization': localStorage.getItem('token')
       },

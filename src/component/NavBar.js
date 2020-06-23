@@ -34,6 +34,12 @@ import M from 'materialize-css'
 import {useHistory} from 'react-router-dom'
 
 
+import ReactNotification from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
+import { store } from 'react-notifications-component';
+
+
+
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -92,7 +98,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
+    //...theme.mixins.toolbar,
     justifyContent: 'flex-end',
   },
   content: {
@@ -186,7 +192,27 @@ export default function NavBar(props) {
   const [openSocial, setopenSocial] = React.useState(false);
   const [openOther, setopenOther] = React.useState(false);
 
+const logout=event=>{
+  localStorage.removeItem('token')
+  localStorage.removeItem('refreshToken')
+  localStorage.removeItem('payload')
+  store.addNotification({
+              title: "Logout Successfully",
+              message: "Do come back",
+              type: "warning",
+              insert: "top",
+              container: "top-left",
+              animationIn: ["animated", "fadeIn"],
+              animationOut: ["animated", "fadeOut"],
+              dismiss: {
+                duration: 4000,
+                onScreen: true
+              }
+            })
+  setTimeout(window.location="/",4000)
+  
 
+}
 
   const handleOther = () => {
     setopenOther(!openOther);
@@ -215,12 +241,12 @@ export default function NavBar(props) {
   const handleDrawerClose = () => {
     setOpen(!open);
     console.log(open)
-    props.parentCallback(!open);
+    //props.parentCallback(!open);
   };
   
   return (
     <div className={classes.root}>
-      
+      <ReactNotification/>
       <AppBar
         position="fixed"
         className={clsx(classes.appBar, {
@@ -267,10 +293,7 @@ Swag Store
     Member Finder
         </Grid>
         <Grid xs={1} sm={2} className={classes.navText} style={{color:' #00FF00'}}>
-         <a href="/login"> <button className="btn waves-effect waves-light"  onClick={()=>{ 
-            localStorage.clear()
-            }}
-            >Logout</button></a>
+         
         </Grid>
         </div>
       </AppBar>
@@ -279,9 +302,7 @@ Swag Store
         variant="persistent"
         anchor="left"
         open={open}
-        classes={{
-          paper: classes.drawerPaper,
-        }}
+        
       >
         <Divider />
         <List className={classes.navList}>
@@ -292,7 +313,7 @@ Swag Store
         <ListItemText> <Typography  classes={{
           root: classes.MuiTypographyRoot, 
         }}>Main</Typography>  </ListItemText>
-        {openMain ? <ExpandLess /> : <ExpandMore />}
+        {openMain ? (<ExpandLess />) : (<ExpandMore />)}
       </ListItem>
       <Collapse in={openMain} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
@@ -303,12 +324,13 @@ Swag Store
            <Link to='/dashboard' > Dashboard </Link>
             
           </ListItem>  
-          <ListItem button className={clsx(classes.nested, classes.expansionButtonCommon)} onClick={handleOther}>
+          <ListItem button 
+          className={clsx(classes.nested, classes.expansionButtonCommon)} onClick={handleOther}>
           <ListItemIcon>
             
           </ListItemIcon>
           <ListItemText className={clsx(classes.nested)}> Other </ListItemText> 
-          {openOther ? <ExpandLess /> : <ExpandMore />} 
+          {openOther ? (<ExpandLess /> ): (<ExpandMore />)} 
 
         </ListItem> 
         <Collapse in={openOther} timeout="auto" unmountOnExit>
@@ -343,7 +365,8 @@ Swag Store
         <ListItem button  > 
         <ListItemIcon>   
         </ListItemIcon>
-        <Link to='/featureReq'>Feature Request</Link>
+        <Link to='/featureReq'>Feature Request</Link><br/>
+        
         </ListItem>
 
 
@@ -393,8 +416,9 @@ Swag Store
         <ListItemIcon>
           <InboxIcon />
         </ListItemIcon>
+       
         <ListItemText className={clsx(classes.nested, classes.expansionHeaderCommon)}>Labs</ListItemText>
-        {openLabs ? <ExpandLess /> : <ExpandMore />}
+        {openLabs ? (<ExpandLess />) : (<ExpandMore />)}
       </ListItem>
       <Collapse in={openLabs} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
@@ -423,11 +447,13 @@ Swag Store
           
         </List>
       </Collapse>
+      
       <ListItem button onClick={handleSocial}>
         <ListItemIcon>
           <InboxIcon />
         </ListItemIcon>
-        <ListItemText className={clsx(classes.nested, classes.expansionHeaderCommon)} >Social </ListItemText>
+        <ListItemText className={clsx(classes.nested, 
+          classes.expansionHeaderCommon)} >Social </ListItemText>
         {openSocial ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={openSocial} timeout="auto" unmountOnExit>
@@ -468,8 +494,14 @@ Swag Store
 
         </List>
       </Collapse>
+       <ListItem button onClick={logout}>
+        
+        Logout
+        
+      </ListItem>
       
         </List>
+
       </Drawer>
       <div
         className={clsx(classes.content, {

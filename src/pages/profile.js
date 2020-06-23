@@ -63,7 +63,7 @@ function Profile() {
     const [profile, setprofile] = React.useState([{}])
 
     useEffect(() => {
-        fetch('http://localhost:8000/user/Profile', {
+        fetch(localStorage.urll +'/user/Profile', {
             headers: {
                 'Authorization': localStorage.getItem('token')
             },

@@ -61,7 +61,7 @@ const [status,setStatus] = React.useState(0);
 const [universities,setuniversities]= React.useState([{}])
      
  useEffect(()=>{
-      fetch('http://localhost:8000/academics/Uni', {
+      fetch(localStorage.urll +'/academics/Uni', {
         headers: {
             'Authorization': localStorage.getItem('token')
         },
