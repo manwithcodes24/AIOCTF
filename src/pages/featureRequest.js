@@ -216,6 +216,7 @@ export default function FeatureRequest() {
       .then(response => {
         //error in fetching
         setreq(response)
+        console.log(response)
       })
       .catch(error => (M.toast({html:error.message,classes:"red"})));
   })
@@ -269,7 +270,7 @@ export default function FeatureRequest() {
       <NavBar name='Feature Request' description="is an online platform allowing you to test and advance your skills in cyber security. Use it responsibly and don't hack your fellow members..." />
       <div>
         <div>
-          <div className="particles" params={particlesOptions} />
+          <div className="particles col-6" style={{"width":"40vw"}} params={particlesOptions} />
           <title>Make a Request</title>
           <form onSubmit={handleSubmit}>
             <label for="title">Title</label>
@@ -291,25 +292,27 @@ export default function FeatureRequest() {
               <List >
                 {req.map(list => {
                   return (
-                    <ListItem key={list.id} className={classes.announcementListItem} >
+                    <>
                       {list.userid === localStorage.getItem('payload') ?
                         (
-                          <div>
-                            <ListItemText>
+                          <div className="d-flex justify-content-center mt-2">
+                          <ul key={list.id} className={classes.announcementListItem} >
+                            <li className="text-center">
 
-                              {list.Title}
-                            </ListItemText>
+                              <h4 className="mt-1 mb-1">{list.Title}</h4>
+                            </li>
 
-                            <ListItemText>
+                            <li>
 
                               {list.Discription}
-                            </ListItemText>
+                            </li>
+                            </ul>
                           </div>) :
 
-                        (<span />)}
+                        (<></>)}
 
-
-                    </ListItem>
+</>
+                    
                   )
 
                 }

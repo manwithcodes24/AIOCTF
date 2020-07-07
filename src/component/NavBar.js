@@ -1,3 +1,5 @@
+
+
 import React from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -32,12 +34,6 @@ import '../assets/css/style.css'
 import logo from '../assets/image/logo4.png'
 import M from 'materialize-css'
 import {useHistory} from 'react-router-dom'
-
-
-import ReactNotification from 'react-notifications-component';
-import 'react-notifications-component/dist/theme.css';
-import { store } from 'react-notifications-component';
-
 
 
 
@@ -98,7 +94,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
-    //...theme.mixins.toolbar,
+    ...theme.mixins.toolbar,
     justifyContent: 'flex-end',
   },
   content: {
@@ -192,27 +188,7 @@ export default function NavBar(props) {
   const [openSocial, setopenSocial] = React.useState(false);
   const [openOther, setopenOther] = React.useState(false);
 
-const logout=event=>{
-  localStorage.removeItem('token')
-  localStorage.removeItem('refreshToken')
-  localStorage.removeItem('payload')
-  store.addNotification({
-              title: "Logout Successfully",
-              message: "Do come back",
-              type: "warning",
-              insert: "top",
-              container: "top-left",
-              animationIn: ["animated", "fadeIn"],
-              animationOut: ["animated", "fadeOut"],
-              dismiss: {
-                duration: 4000,
-                onScreen: true
-              }
-            })
-  setTimeout(window.location="/",4000)
-  
 
-}
 
   const handleOther = () => {
     setopenOther(!openOther);
@@ -242,11 +218,12 @@ const logout=event=>{
     setOpen(!open);
     console.log(open)
     //props.parentCallback(!open);
+    //console.log(props.parentCallback(!open))
   };
   
   return (
     <div className={classes.root}>
-      <ReactNotification/>
+      
       <AppBar
         position="fixed"
         className={clsx(classes.appBar, {
@@ -270,7 +247,6 @@ const logout=event=>{
   <Typography>AIOC</Typography>
           </Typography>
 {/* =======
-
 // >>>>>>> 97cdca3aa998140502e3639285ebd77e4c06ad23 */}
         </Toolbar>
         <div style={{justifyContent:'flex-end',flexDirection:'row',display:'flex',width:'100%' }} className={classes.root}>
@@ -293,7 +269,10 @@ Swag Store
     Member Finder
         </Grid>
         <Grid xs={1} sm={2} className={classes.navText} style={{color:' #00FF00'}}>
-         
+         <a href="/login"> <button className="btn waves-effect waves-light text-light"  onClick={()=>{ 
+            localStorage.clear()
+            }}
+            > Logout</button></a>
         </Grid>
         </div>
       </AppBar>
@@ -302,7 +281,9 @@ Swag Store
         variant="persistent"
         anchor="left"
         open={open}
-        
+        classes={{
+          paper: classes.drawerPaper,
+        }}
       >
         <Divider />
         <List className={classes.navList}>
@@ -313,15 +294,16 @@ Swag Store
         <ListItemText> <Typography  classes={{
           root: classes.MuiTypographyRoot, 
         }}>Main</Typography>  </ListItemText>
-        {openMain ? (<ExpandLess />) : (<ExpandMore />)}
+        {openMain ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
+      
       <Collapse in={openMain} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           <ListItem button  >
             <ListItemIcon>
               
             </ListItemIcon>
-           <Link to='/dashboard' > Dashboard </Link>
+           <Link  to='/dashboard' ><Typography style={{"color":"white"}}> Dashboard </Typography></Link>
             
           </ListItem>  
           <ListItem button 
@@ -330,7 +312,7 @@ Swag Store
             
           </ListItemIcon>
           <ListItemText className={clsx(classes.nested)}> Other </ListItemText> 
-          {openOther ? (<ExpandLess /> ): (<ExpandMore />)} 
+          {openOther ? <ExpandLess /> : <ExpandMore />} 
 
         </ListItem> 
         <Collapse in={openOther} timeout="auto" unmountOnExit>
@@ -340,14 +322,15 @@ Swag Store
         <ListItem button  > 
         <ListItemIcon>   
         </ListItemIcon>
-        <Link to='/rules'>Rules</Link>
+        <Link to='/rules'><Typography style={{"color":"white"}}>Rules </Typography></Link>
         </ListItem>
   
         
+        
         <ListItem button  > 
         <ListItemIcon>   
         </ListItemIcon>
-        
+        <Link to='/featureReq'><Typography style={{"color":"white"}}>Feature Request </Typography></Link>
         </ListItem>
 
 
@@ -356,32 +339,13 @@ Swag Store
         <ListItem button  > 
         <ListItemIcon>   
         </ListItemIcon>
-       
-        </ListItem>
-
-
-      
-        
-        <ListItem button  > 
-        <ListItemIcon>   
-        </ListItemIcon>
-        <Link to='/featureReq'>Feature Request</Link><br/>
-        
-        </ListItem>
-
-
-      
-        
-        <ListItem button  > 
-        <ListItemIcon>   
-        </ListItemIcon>
-        <Link to='/announcement'>Announcment</Link>
+        <Link to='/announcement'><Typography style={{"color":"white"}}>Announcement </Typography></Link>
         </ListItem>
 
         <ListItem button  > 
         <ListItemIcon>   
         </ListItemIcon>
-        <Link to='/support'>Support</Link>
+        <Link to='/support'><Typography style={{"color":"white"}}> Support </Typography></Link>
         </ListItem>
 
 
@@ -406,7 +370,7 @@ Swag Store
             <ListItemIcon>
              
             </ListItemIcon>
-            <Link to='/universities'>Universities</Link>
+            <Link to='/universities'><Typography style={{"color":"white"}}>universities </Typography></Link>
           </ListItem>
           
           
@@ -416,44 +380,27 @@ Swag Store
         <ListItemIcon>
           <InboxIcon />
         </ListItemIcon>
-       
         <ListItemText className={clsx(classes.nested, classes.expansionHeaderCommon)}>Labs</ListItemText>
-        {openLabs ? (<ExpandLess />) : (<ExpandMore />)}
+        {openLabs ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={openLabs} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItem button  >
-            <ListItemIcon>
-              
-            </ListItemIcon>
-            
-          </ListItem>
           
-
-          <ListItem button  >
-            <ListItemIcon>
-              
-            </ListItemIcon>
-            
-          </ListItem>
-
           <ListItem button  >
           <ListItemIcon>
             
           </ListItemIcon>
-          <Link to='/challenges'>Challenges</Link>
+          <Link to='/challenges'><Typography style={{"color":"white"}}>Challenges </Typography></Link>
         </ListItem>
         
           
         </List>
       </Collapse>
-      
       <ListItem button onClick={handleSocial}>
         <ListItemIcon>
           <InboxIcon />
         </ListItemIcon>
-        <ListItemText className={clsx(classes.nested, 
-          classes.expansionHeaderCommon)} >Social </ListItemText>
+        <ListItemText className={clsx(classes.nested, classes.expansionHeaderCommon)} >Social </ListItemText>
         {openSocial ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={openSocial} timeout="auto" unmountOnExit>
@@ -494,14 +441,8 @@ Swag Store
 
         </List>
       </Collapse>
-       <ListItem button onClick={logout}>
-        
-        Logout
-        
-      </ListItem>
       
         </List>
-
       </Drawer>
       <div
         className={clsx(classes.content, {

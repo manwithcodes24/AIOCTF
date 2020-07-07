@@ -28,7 +28,7 @@ import Profile from "./pages/profile.js";
 function App (){
 
   useEffect(()=>{
-    localStorage.setItem('urll',"https://192b94e97f1f.ngrok.io")
+    localStorage.setItem('urll',"https://d8764ca60452.ngrok.io")
 //localStorage.removeItem('url')
   })
     
@@ -58,6 +58,8 @@ return (
   <Route exact path="/featureReq" component={FeatureRequest} />
   <Route exact path="/profile" component={ Profile} />
   <Redirect from="/login" to="/dashboard"/>
+  
+
   <Redirect from="/" to="/dashboard"/>
   
 

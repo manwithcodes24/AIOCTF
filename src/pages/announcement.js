@@ -8,7 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Typography, List, ListItem, ListItemText } from '@material-ui/core'
 
 
-
+import NotificationsIcon from '@material-ui/icons/Notifications';
 
 const drawerWidth = 240;
 const contentWidth = 200;
@@ -107,46 +107,25 @@ function Announcement() {
               Here are all the latest Announcements :
         </Typography>
             <div className={classes.demo}>
-              <List >
-                {announcement.map( ann => (
-                  <ListItem className={classes.announcementListItem} >
-                    <ListItemText
+               <List >
+            {announcement.map(list => (
+<ul key={list.id} className="list-group m-2" >
+                <li className="list-group-item m-1" style={{"backgroundColor" :"#292e33"}}
+                 
+                ><NotificationsIcon/> {list.Title}<br/></li>
+              
+                <li className="list-group-item mb-1 mr-1 ml-1" style={{"backgroundColor" :"#292e33"}}
+                 
+                > {list.Discription}</li>
+                
+              </ul>
 
-                    > {ann.Title}</ListItemText>
-
-                    <ListItemText
-
-                    > {ann.Discription}</ListItemText>
-                  </ListItem>
-                //   <div  className={clsx(classes.content, {
-                //     [classes.contentShift]: open
-                //   }, classes.root)}>
-            
-            
-                //   <ExpansionPanel className={classes.expansionPanel} expanded={expanded === 'panel1'}
-                //   onChange={handleChange('panel1')}>
-            
-                //     <ExpansionPanelSummary
-                //       expandIcon={<ExpandMoreIcon />}
-                //       aria-controls="panel1bh-content"
-                //       id="panel1bh-header"
-                //     >
-                //       <Typography className={classes.heading}> <div className='rulesCounting'>1</div></Typography>
-                //       <Typography className={classes.secondaryHeading}>{ann.Title}</Typography>
-                //     </ExpansionPanelSummary>
-                //     <ExpansionPanelDetails>
-                //       <Typography>
-                //         {ann.Discription}
-                //       </Typography>
-                //     </ExpansionPanelDetails>
-                //   </ExpansionPanel>
-                //  </div>
-                )
-                )}
-
-
-              </List>
-            </div>
+              )
+              )}
+              
+        
+          </List>
+                          </div>
           </Grid>
         </Grid>
       </div>

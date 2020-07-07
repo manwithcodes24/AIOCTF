@@ -110,22 +110,33 @@ const [universities,setuniversities]= React.useState([{}])
         <Typography variant="h6" className={classes.title}>
           Universities List :
         </Typography>
-        <div className={classes.demo}>
-          <List >
-            {universities.map( (list,key) => (
-<ListItem  key={list.id} className={classes.universitiesListItem} >
-                <ListItemText
-                >Name : {list.Name}</ListItemText><br/>
-                <ListItemText>
-                Location : {list.Location}</ListItemText><br/>
-                <ListItemText>
-                World Ranking : {list.World_Ranking} </ListItemText><br/>
-                <ListItemText>
-                Status : {list.status}</ListItemText><br/>
-              </ListItem>
-            )	)}
-          </List>
-        </div>
+        <div className="container-fluid  " >
+  <div className="row d-flex justify-content-around"  >
+   {universities.map( (list,key) => (
+
+<div className="col-lg-4 col-md-4 col-8  m-2 card" style={{"backgroundColor" :"#292e33"}} >
+
+  
+        
+          <ul className="list-group" key={list.id}>
+            
+
+                <li className="list-group-item mt-2" style={{"backgroundColor" :"#292e33"}}
+                >Name : {list.Name}</li>
+                <li  className="list-group-item" style={{"backgroundColor" :"#292e33"}}>
+                Location : {list.Location}</li>
+                <li  className="list-group-item" style={{"backgroundColor" :"#292e33"}}>
+                World Ranking : {list.World_Ranking} </li>
+                <li  className="list-group-item" style={{"backgroundColor" :"#292e33"}}>
+                Status : {list.status}</li><br/>
+              
+           
+          </ul>
+       
+         </div>
+          ) )}
+          </div>
+           </div>
       </Grid>
 </Grid>
        </div>

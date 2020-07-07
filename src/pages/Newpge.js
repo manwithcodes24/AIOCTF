@@ -128,48 +128,48 @@ useEffect(() => {
 
     return(
  
-<div className="container-fluid  ">
+<>
 
   <NavBar name='Challenge' description="is an online platform allowing you to test and advance your skills in cyber security. Use it responsibly and don't hack your fellow members..." />
      
-<div className="container  " >
+<div className="container-fluid  " >
   <div className="row d-flex justify-content-around"  >
    
     
 <ReactNotification/>
       {all.map(list => {
     return(
-<div className="col-lg-4 col-md-4 col-6 m-1 mt-2 mb-2 border border-light  text-light general">
+<div className="col-lg-4 col-md-4 col-8  m-2 card" style={{"backgroundColor" :"#292e33"}} >
 
     
-      <h3 >
+      <h6 className="mt-2">
         
            Category : {list.Category}
-           </h3>
-           <h3>
+           </h6>
+           <h6>
          Title : {list.Title}
-         </h3>
+         </h6>
          
-         <h3>
+         <h6 className="mt-2">
          Time Limitation{list.TimeLimitation}
-         </h3>
-         <div>
-         <h3>Give Answer </h3>
-        <input type="string" placeholder="your ans"
+         </h6>
+         
+         <h6 className="mt-2 ">Give Answer </h6>
+        <input type="text" placeholder="your ans" className="text-light"
               onChange={(event) => {setans(event.target.value)}}/><br/>
 
-<div className="d-flex justify-content-center">
-      <button  className="btn btn-primary"
+
+      <button  className="btn mt-1 mb-2  text-light"
       onClick={()=>Accept(list.id)}>
-                                             Submit Response  
+                                             Submit 
       </button>
                     
 
 
       
                     
-  </div>
-  </div>
+ 
+  
   </div>
     
      )
@@ -177,6 +177,6 @@ useEffect(() => {
   }
 </div>
 </div>
-</div>
+</>
     )
 }

@@ -174,7 +174,7 @@ function LoginPage() {
           if (response.access) {
             localStorage.setItem('token', response.access.access);
             localStorage.setItem('refreshToken', response.access.refresh)
-            localStorage.setItem('payload', JSON.stringify(response.payload.user_id))
+            localStorage.setItem('payload', response.payload.user_id)
             console.log(response)
             store.addNotification({
               title: "Login Successful",

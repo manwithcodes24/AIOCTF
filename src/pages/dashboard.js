@@ -454,7 +454,7 @@ export default function Dashboard() {
                             My Profile
          </Typography>
                         <div className={classes.demo}>
-                            <List >
+                            <List className="card"  style={{"backgroundColor" :"#292e33"}}>
                                     <ListItem className={classes.announcementListItem} >
                                         <ListItemText
 
@@ -481,8 +481,7 @@ export default function Dashboard() {
                     </Grid>
                 </Grid>
             </div>
-              <Link to="#" ><button className="ghost">EditProfile</button>  </Link>
-
+              
 
             {/* ------------------------------------------ */}
             <Grid item>

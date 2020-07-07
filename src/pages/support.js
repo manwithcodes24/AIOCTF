@@ -7,7 +7,8 @@ import NavBar from '../component/NavBar';
 import '../assets/css/style.css'
 import { makeStyles } from '@material-ui/core/styles';
 import {Grid, Typography, List, ListItem, ListItemText} from '@material-ui/core'
-
+import PhoneIcon from '@material-ui/icons/Phone';
+import EmailIcon from '@material-ui/icons/Email';
 
 const drawerWidth = 240;
 const contentWidth = 200 ; 
@@ -111,16 +112,16 @@ useEffect(()=>{
         <div className={classes.demo}>
           <List >
             {support.map(list => (
-<ListItem  key={list.id} className={classes.announcementListItem} >
-                <ListItemText
+<ul key={list.id} className="list-group m-2" >
+                <li className="list-group-item m-1" style={{"backgroundColor" :"#292e33"}}
                  
-                > {list.Phone}</ListItemText>
+                ><PhoneIcon/> {list.Phone}<br/></li>
               
-                <ListItemText
+                <li className="list-group-item mb-1 mr-1 ml-1" style={{"backgroundColor" :"#292e33"}}
                  
-                > {list.Email}</ListItemText>
+                ><EmailIcon/> {list.Email}</li>
                 
-              </ListItem>
+              </ul>
 
               )
               )}
